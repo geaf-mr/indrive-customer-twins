@@ -30,14 +30,19 @@ def check_password():
         # Obtener contraseñas válidas desde secrets o valores por defecto
         valid_passwords = st.secrets.get("passwords", {
             "admin": "Criba2026*",
-            "indrive": "InDrivePiloto2026"
+            "indrive": "InDrivePiloto2026",
+            "Criba": "InDrive2026",
+            "criba": "InDrive2026"
         })
         user = st.session_state.get("login_username", "").strip()
         passwd = st.session_state.get("login_password", "").strip()
         
-        if user in valid_passwords and valid_passwords[user] == passwd:
+        # Permitir matching de usuario sensible o insensible a mayúsculas
+        matched_user = next((k for k in valid_passwords if k.lower() == user.lower()), None)
+        
+        if matched_user and valid_passwords[matched_user] == passwd:
             st.session_state["authenticated"] = True
-            st.session_state["authenticated_user"] = user
+            st.session_state["authenticated_user"] = matched_user
             if "login_password" in st.session_state:
                 del st.session_state["login_password"]
         else:
