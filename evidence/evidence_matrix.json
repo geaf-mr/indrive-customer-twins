@@ -1,0 +1,693 @@
+[
+  {
+    "patron_id": "P_IND_01",
+    "tema": "Elección y Preferencia de Plataforma (inDrive vs Yango vs Calle)",
+    "patron": "Valoración de la negociación manual de tarifa y autonomía (Disciplined Hard Work)",
+    "profile_affinity": "twin_a",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP07",
+      "EP09",
+      "EP10",
+      "EP12",
+      "EP13",
+      "EP15",
+      "EP16",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 20,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_042",
+        "evidencia_textual": "Yo voy más o menos viendo la distancia, si veo que de repente está a dos kilómetros, ya no me voy vacío hasta por allá para recogerlo, sino ya veo qué ruta o qué avenida está tomando o por dónde voy a ir para ver si agarro algo en el camino. Algo bueno, así yo trabajo, ¿no? No sé cómo trabajan las demás personas. Hay personas que van directo, creo,..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_043",
+        "evidencia_textual": "Así me gane o lo que pueda haber, porque a veces las tarifas son chiquitas, bueno, si ya se me pasa, ya sea fue, pues ya, acabo yo. Pero sí me tomo mi tiempo de ver todo, todo. Veo toda la información que está en el viaje y ya, lo tomo, lo tomo, lo tomo.\nClaro, así es eso de que voy aprovechando la ruta. Las distancias, veo todo, el tirometraje que..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_044",
+        "evidencia_textual": "¿Cuánto por kilómetro? O sea, yo, ¿cuánto se te puede tomar? Yo, el auto era mi cálculo, en mi mental y lo cambié porque yo, como les digo, yo trabajo en camionetas y el Uber, el Cabify, inclusive antes de, trabajé con el Vic, también antes de que se vaya mi primer año cuando trabajé. un buen aplicativo que era porque te da buenos bonos la verdad y..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_047",
+        "evidencia_textual": "Ok. Y este, pero vamos al precio, ¿no? O sea, no ves el costo. Ahí está la, también el tema del.\nClaro, por un lado. La trampa, ¿no? Yo digo la trampa porque no ves el costo, ¿no? Ah. No ves el costeo.\nTiene la facilidad de elegir, ¿no? Negociar, elegir, te tomas su tiempo. Y el otro. El otro te asegura."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_049",
+        "evidencia_textual": "Pero vamos a ver. No, yo preferiría ahorita por el momento Android. Porque inclusive he trabajado con Android también en auto.\nY me parece una mejor aplicación. O sea, hasta el momento. ¿Por qué es mejor? Por el tema de, bueno, lo que te explico, el tema de que tú puedes negociar los viajes y el tema, bueno, los costos deben mejorar.\nEl kilometraje..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_060",
+        "evidencia_textual": "Porque en auto, cuando yo manejaba... Bueno, tienes que hacer tu recarga, pues, ¿no? Es que si tú crees que ahora, si cobra comisión... Te deberían subir los costos, pues. Todo, todo. Una vez que tú cobras algún servicio, igual que con el auto que puedes negociar... Te deberían subir más los costos.\nDe repente la gente va a ver un... Un choque o al..."
+      }
+    ],
+    "interpretacion": "Los conductores estructurados (Disciplined Hard Work / Twin A) valoran inDrive porque les permite ajustar el precio al esfuerzo exigido por el terreno (cerros, trocha) o el tráfico."
+  },
+  {
+    "patron_id": "P_YAN_01",
+    "tema": "Elección y Preferencia de Plataforma (inDrive vs Yango vs Calle)",
+    "patron": "Preferencia por asignación automática inmediata y bonos (Tactical Cash Optimizer)",
+    "profile_affinity": "twin_b",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP21",
+      "EP22",
+      "EP24"
+    ],
+    "total_menciones": 21,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_042",
+        "evidencia_textual": "Yo voy más o menos viendo la distancia, si veo que de repente está a dos kilómetros, ya no me voy vacío hasta por allá para recogerlo, sino ya veo qué ruta o qué avenida está tomando o por dónde voy a ir para ver si agarro algo en el camino. Algo bueno, así yo trabajo, ¿no? No sé cómo trabajan las demás personas. Hay personas que van directo, creo,..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_044",
+        "evidencia_textual": "¿Cuánto por kilómetro? O sea, yo, ¿cuánto se te puede tomar? Yo, el auto era mi cálculo, en mi mental y lo cambié porque yo, como les digo, yo trabajo en camionetas y el Uber, el Cabify, inclusive antes de, trabajé con el Vic, también antes de que se vaya mi primer año cuando trabajé. un buen aplicativo que era porque te da buenos bonos la verdad y..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_046",
+        "evidencia_textual": "Pero sería bueno que fuera simultáneo, ok. Claro, en simultáneo quizás, ¿no?, se podría haber una opción o algo, o de repente ya cuando el otro está acabando, ya ves que ya no se puede, ya, ya estás con el otro al toque, pues. Ok.\nY su... Bueno, eso es con, eso es con, disculpa, eso es con Andrai, ¿no? Porque Andrai tú tienes que estar viendo qué v..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_055",
+        "evidencia_textual": "¿Qué consideras si tomas... ¿Qué consideras si tomas, aparte del precio, para tomar un viaje? Digamos, yo voy a hacer un mototaxi. ¿Qué me recomendarías, digamos? Vaya, que veas la data, pues, el usuario, como te digo, la información, la foto, que veas la calificación, más que todo, y veas la distancia, ¿no?, de punto A al punto B, y si es rentable..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_061",
+        "evidencia_textual": "Claro, un viaje de repente a un porcentaje menor ya lo va jalando. Y de ahí ya normal cobran su precio. Pero para mí, si sube la comisión, digamos que... ¿Cuánto normalmente? 10, 12%, ¿no? Entre 10 y 15, ¿no? Sí, sí, claro que sí, ¿no? Por viaje.\n¿Cómo podrías compensar eso? Aparte del costo. Para ti, ¿no? Hablando como conductor, no como pasajero...."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_022",
+        "evidencia_textual": "Me queda mola. Y si está dinámico, si está conveniente a mí, me engancho, me sigo quedando. Aprovecho.\nMientras no tengan nada que hacer, porque a veces llevo en casa, y digo, no tengo nada que hacer en casa, mejor me quedo acá tomando. Tengo un buen amigo. Un buen amigo como ese.\nY entre los dos, ¿cuál prefieres? Ahorita, así como está, así en est..."
+      }
+    ],
+    "interpretacion": "Los conductores tácticos (Tactical Cash Optimizer / Twin B) prefieren Yango porque la asignación instantánea elimina los tiempos muertos de negociación y acelera el logro de metas diarias de bonos."
+  },
+  {
+    "patron_id": "P_CAL_01",
+    "tema": "Elección y Preferencia de Plataforma (inDrive vs Yango vs Calle)",
+    "patron": "Preferencia por carreras de paradero formal y calle sin estrés de app (Low-Pressure Flexibles)",
+    "profile_affinity": "twin_c",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP11",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 25,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_010",
+        "evidencia_textual": "¿Y cuánto haces al día? La verdad, por lo que estoy viendo, ahorita también estoy explorando el aplicativo, porque creo que recién está empezando también, no tiene mucho tiempo. En calle, yo he trabajado, o sea, así como el auto, hay gente, hay taxicalle, hay taxiaplicativo. Creo que le dicen así, bueno, que se conoce popularmente, igual en la moto..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_011",
+        "evidencia_textual": "Ahora con el aplicativo hay intervalos, o sea, no es como que tan corrido, hay intervalos de tiempo, porque en el aplicativo es como que no lo recoges ahí mismo, ¿no? Tienes que ir a recoger al pasajero, ir al otro destino, de ahí de nuevo estar esperando y así, ¿no? Pero no varía mucho, está por ahí, más o menos, pero sí me da para sobrevivir, la ..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_030",
+        "evidencia_textual": "Usted sabe que acá no hay empresa, pues no hay seguro, no hay nada. Claro. O sea, hay la asociación para formalizar, o sea, está formalizado, digamos, para que no, la municipalidad no te levante.\nExactamente. Pero no hay... O sea, no hay nada que... Más que todo por temas seguros, porque creo que las empresas te ofrecen temas seguros, te dan gratif..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_031",
+        "evidencia_textual": "O sea, digo, en proporción. ¿En lo opuesto? No, no, no. Me refiero de... Ah, en cantidades.\nEn cantidades, claro. Digamos, o sea, de 10, 7 son... O 70% es, no sé, callejeras, o 70% es aplicativo, y el resto es todo. Ahorita es un 50-50, que pongo yo.\nSí, porque... Como ya estoy con el aplicativo así de parejo, porque bueno, también demoro un poco e..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_032",
+        "evidencia_textual": "Sí, por ahí. 50-50. ¿Y cómo fue que consideraste comenzar a trabajar con Indra? Utilizando tu mototaxi.\nAh, ya, este... Bueno, notaba que en la calle, o sea, a veces cuando estaba así, prácticamente... A mí no me gusta estar parado, ¿no? O sea, estar en un solo lugar. Fuera de puerta, digamos. O sea, y también no estar en un solo lugar.\nY dije, bue..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_037",
+        "evidencia_textual": "¿Te acuerdas la primera vez que te registraste en el eDrive? ¿Cómo fue? Ah, estuve en un paradero cerca de mi casa por el Red Plaza de Villamaría. Ahí vino un joven, vino, me dijo que estaba, ¿no? afiliando al aplicativo y ya le di mis datos nada más. ¿Y quién lo hizo? Él lo hizo, por el celular.\n¿Con tu celular? No, por su celular. ¿Con su celular..."
+      }
+    ],
+    "interpretacion": "Los conductores de bajo estrés (Low-Pressure Flexibles / Twin C) prefieren trabajar en su paradero o recogiendo pasajeros en la calle, activando la app solo en horas muertas o para asegurar el retorno."
+  },
+  {
+    "patron_id": "P_SEG_01",
+    "tema": "Seguridad y Evaluación de Riesgo de Zona",
+    "patron": "Ver el destino completo antes de aceptar como filtro de seguridad imprescindible",
+    "profile_affinity": "twin_a",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP07",
+      "EP08",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 19,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_011",
+        "evidencia_textual": "Ahora con el aplicativo hay intervalos, o sea, no es como que tan corrido, hay intervalos de tiempo, porque en el aplicativo es como que no lo recoges ahí mismo, ¿no? Tienes que ir a recoger al pasajero, ir al otro destino, de ahí de nuevo estar esperando y así, ¿no? Pero no varía mucho, está por ahí, más o menos, pero sí me da para sobrevivir, la ..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_052",
+        "evidencia_textual": "¿Vas a tener algún inconveniente? No, con eso no. En auto una vez, pero solamente fue porque vi y me pareció sospechoso en un barrio peligroso, estaba creo que por barrios altos, creo. Y agarré y me quité, con la misma me fui.\nSí, sí, me fui, me fui. De acá a Chile pasó. Sí, estaba trabajando en auto.\nSí. Pero claro, tú mismo ves. Pero en moto no."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_029",
+        "evidencia_textual": "Para entenderte, lo que siento es que, corríjame si estoy mal, tú usas Django por los bonos, La recompensa. Por la recompensa que vas haciendo. Y ahora ya, Django ha puesto una tarifa que está tres a diez.\nClaro, porque en Django te sale de frente, tú no negocias, te sale de frente. Pero Django le pone un precio al cliente de voto, yo le pongo un p..."
+      },
+      {
+        "transcript_id": "EP04",
+        "interviewee_label": "EP 04 JUNIOR CORDOVA INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP04_chunk_041",
+        "evidencia_textual": "Si conviene, se le lleva. Una cámara. Ok.\n¿Pero tú actualmente te sientes seguro manejando? O sea... Acá en día, no. No. ¿Pero son factores externos? Me refiero, no sé, exorción, reglas... No, o sea, sino que la mayoría empieza ya como que sobresalirse de las manos con el tema de los robos.\n¿A qué te refieres? Estas motitos son las que son más soli..."
+      },
+      {
+        "transcript_id": "EP05",
+        "interviewee_label": "EP 05 JORLA VASQUEZ YANGO",
+        "app_affiliation": "Yango",
+        "chunk_id": "EP05_chunk_006",
+        "evidencia_textual": "¿Tu licencia, tu SOA, tu tarjeta de propiedad? ¿Todo? ¿Todo en reglas? Todo en reglas, sí. Ok, qué bueno. ¿Por qué mototaxi, no motolineal? En realidad, bueno, yo en Venezuela, yo soy venezolano, yo manejaba motolineal hace cinco años.\nPero acá yo lo veo muy peligroso. Por el peligro más que todo. Ok.\nO sea, por el riesgo de accidentes. El riesgo d..."
+      },
+      {
+        "transcript_id": "EP05",
+        "interviewee_label": "EP 05 JORLA VASQUEZ YANGO",
+        "app_affiliation": "Yango",
+        "chunk_id": "EP05_chunk_017",
+        "evidencia_textual": "Y puso dos puntos. Uno de recojo y después de ir a la azúcar. Y en el primer punto se bajó y la pistola arrastrió.\nYo pensé que me iba a robar, pero dijo, no, tranquilo chamo. Yo te he pedido y tal. Vamos a estar aquí.\nTe voy a buscar su droga. Lo volví a montar y ya lo llevé. Pero de robos, no."
+      }
+    ],
+    "interpretacion": "Ver el punto final es un requisito no negociable para conductores precavidos en zonas de alto riesgo de Comas/cerros, previniendo asaltos o extorsiones."
+  },
+  {
+    "patron_id": "P_SEG_02",
+    "tema": "Seguridad y Evaluación de Riesgo de Zona",
+    "patron": "Tolerancia al riesgo por incentivos monetarios rápidos",
+    "profile_affinity": "twin_b",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 23,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_044",
+        "evidencia_textual": "¿Cuánto por kilómetro? O sea, yo, ¿cuánto se te puede tomar? Yo, el auto era mi cálculo, en mi mental y lo cambié porque yo, como les digo, yo trabajo en camionetas y el Uber, el Cabify, inclusive antes de, trabajé con el Vic, también antes de que se vaya mi primer año cuando trabajé. un buen aplicativo que era porque te da buenos bonos la verdad y..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_055",
+        "evidencia_textual": "¿Qué consideras si tomas... ¿Qué consideras si tomas, aparte del precio, para tomar un viaje? Digamos, yo voy a hacer un mototaxi. ¿Qué me recomendarías, digamos? Vaya, que veas la data, pues, el usuario, como te digo, la información, la foto, que veas la calificación, más que todo, y veas la distancia, ¿no?, de punto A al punto B, y si es rentable..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_061",
+        "evidencia_textual": "Claro, un viaje de repente a un porcentaje menor ya lo va jalando. Y de ahí ya normal cobran su precio. Pero para mí, si sube la comisión, digamos que... ¿Cuánto normalmente? 10, 12%, ¿no? Entre 10 y 15, ¿no? Sí, sí, claro que sí, ¿no? Por viaje.\n¿Cómo podrías compensar eso? Aparte del costo. Para ti, ¿no? Hablando como conductor, no como pasajero...."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_022",
+        "evidencia_textual": "Me queda mola. Y si está dinámico, si está conveniente a mí, me engancho, me sigo quedando. Aprovecho.\nMientras no tengan nada que hacer, porque a veces llevo en casa, y digo, no tengo nada que hacer en casa, mejor me quedo acá tomando. Tengo un buen amigo. Un buen amigo como ese.\nY entre los dos, ¿cuál prefieres? Ahorita, así como está, así en est..."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_024",
+        "evidencia_textual": "¿Qué crees que le falta a InDrive para que llegue a ser como Django? Porque Django, perdón, Django cuando te cubre comisión, antes de pasar a InDrive. No, no, no. Django... Ahí me está cobrando... 1.100, 1.100, 1.100, en realidad.\nYo creo que es un chiquito. Eso, ¿cuánto sería en porcentaje? Como 15. O sea, ¿cuándo te saca Django? Su carrera de Dja..."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_025",
+        "evidencia_textual": "¿Pero eso entra como crédito? Porque yo sé que en Django tienes que cargar. No es efectivo, no es efectivo, pero lo puedo dar mañana. A ver, para entenderte.\nDjango, yo sé que Django, tú tienes que cargar para usar el aplicativo, ¿cierto? No. O sea, tú prendes en la... O sea, yo ahorita prendo, saco un mototaxi ahorita, y prendo, y ya está. No teng..."
+      }
+    ],
+    "interpretacion": "Conductores enfocados en maximizar el efectivo diario asumen mayor incertidumbre si los bonos o tarifas compensan la cuota."
+  },
+  {
+    "patron_id": "P_SEG_03",
+    "tema": "Seguridad y Evaluación de Riesgo de Zona",
+    "patron": "Evitación total de zonas complicadas y rutas nocturnas de alto riesgo",
+    "profile_affinity": "twin_c",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP11",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 25,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_006",
+        "evidencia_textual": "Sí, un conocido mío ya prácticamente que ya está trabajando con el señor ya años. ¿Y esa moto está en algún grupo? Está en una empresa formal. Formal dentro del distrito de Villa Salvador.\nDentro de Villa Salvador. Exactamente. Tiene su permiso y todo.\nRige todo Villa Salvador. ¿Cómo comen? Me da curiosidad todavía. Sí, claro."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_009",
+        "evidencia_textual": "¿Y tienes otra fuente de ingreso o esta es tu única fuente de ingreso? No, bueno, yo trabajo en esto prácticamente doce horas. ¿Doce horas? Doce horas, salgo en la mañana de cinco, de la mañana o seis de la mañana hasta siete, ocho de la noche. Un poquito más de doce horas.\nY mi esposa me apoya, mi esposa también trabaja. Y en ambas partes manejamo..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_017",
+        "evidencia_textual": "Se la llevaron a la moto. Por eso... El tema de seguridad también está bien complicado ahorita la situación. Inclusive, ahora último, creo que mataron a un conductor de bus.\nAcá, por acá cerca. Y está bien complicado. Sí, sí.\nSeguridad también. Claro, influye bastante en el tema de lo que es... Con los viajes, más que todo. Porque también tienen qu..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_027",
+        "evidencia_textual": "Y te lo dan libre. Pero último estuve trabajando con mi suegro con su camioneta porque él trabaja de noche y yo trabajo de día. Sí, sí.\nEstábamos así, por turno, 12 horas. Trabajamos netamente para una empresa que también es familiar. Y mi misión ahorita, como te digo, mi idea es volver al carro con mi otra categoría y meterme bien en esa empresa.\n..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_037",
+        "evidencia_textual": "¿Te acuerdas la primera vez que te registraste en el eDrive? ¿Cómo fue? Ah, estuve en un paradero cerca de mi casa por el Red Plaza de Villamaría. Ahí vino un joven, vino, me dijo que estaba, ¿no? afiliando al aplicativo y ya le di mis datos nada más. ¿Y quién lo hizo? Él lo hizo, por el celular.\n¿Con tu celular? No, por su celular. ¿Con su celular..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_041",
+        "evidencia_textual": "Claro. Eso es lo que hago, me vacío, me trato de verme bien y todo, y salgo. ¿A qué hora comienzas? En paralelo, salgo 6 de la mañana porque a veces me demoro un poquito en el micro y tratando de limpiar la moto.\nA las 6. 6, prende el aplicativo en paralelo, lo que chape primero, lo que avanzo, salgo, porque como estoy cerca al mercado vía sur, ahí..."
+      }
+    ],
+    "interpretacion": "Conductores de baja presión prefieren evitar cualquier viaje que implique tensión, peligro o desplazamientos largos a cerros sin luz."
+  },
+  {
+    "patron_id": "P_COM_01",
+    "tema": "Comisiones e Incentivos Económicos",
+    "patron": "Percepción de la comisión como pago por servicio que debe mantenerse bajo (10% o menos)",
+    "profile_affinity": "twin_a",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP11",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 25,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_010",
+        "evidencia_textual": "¿Y cuánto haces al día? La verdad, por lo que estoy viendo, ahorita también estoy explorando el aplicativo, porque creo que recién está empezando también, no tiene mucho tiempo. En calle, yo he trabajado, o sea, así como el auto, hay gente, hay taxicalle, hay taxiaplicativo. Creo que le dicen así, bueno, que se conoce popularmente, igual en la moto..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_012",
+        "evidencia_textual": "Claro. Que está para recogerlo por lo menos de acá hasta la B, hasta la C, ¿no? Ya más o menos agarro, que estoy bajando toda la avenida, pues cojo a alguien que baja hasta la C. Claro. Exactamente, ya no pierdo nada.\nAhí caes y ya llegas y ya está. 2 por 1. 2 por 1, exacto. Ya hago así más o menos.\n¿Y cuánto haces? ¿Por cuánto? A ver, ¿cuánto hace..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_013",
+        "evidencia_textual": "¿Solo en el aplicativo? En el aplicativo. ¿En cuál? ¿En Django o en Andriod? No, en Andriod. El Django lo tengo recién unos días.\nLo estoy probando, la verdad. Porque... El Django puede ser rojito, ¿no? El rojito, sí. Pero en kilometraje la verdad que no es mucha ganancia.\nComo que están pagando, creo que en kilómetro están pagando como un sol 10. ..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_014",
+        "evidencia_textual": "Y la verdad que venirte, por ejemplo, del Oval Oasis hasta por acá, que vendrían a ser como 7, 8 soles. Te está pagando 4.50, 5 soles. Y ese pequeño espacio es la ganancia.\n¿Y te cobra comisión? Creo que el Django, por ser nuevo, creo que me regala 15 viajes o algo así. O me dan un saldo a mi favor para poder trabajar. ¿Y el Andriod? El Andriod cre..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_024",
+        "evidencia_textual": "Claro que han hecho que esta moto, bueno, desde el año pasado. Van mejorando, creo, cada año. No sé cómo sea.\nPero sí, más que todo por comodidad sería. Por la comodidad. Es un poquito incómodo y no es lo mismo que estar en el auto.\n¿Y te ha pasado algo? ¿Te ha ocurrido algo en algún momento? Bueno, este... ¿Algún susto por ahí o tal vez te ha pasa..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_029",
+        "evidencia_textual": "Claro. Carros buenos. Ahí está mi misión ahí, entrar, porque igual comenté, conversé, perdón, con el tío de mi señora y igual me dijo lo mismo.\nSacas tu A2B y te subes al micro, así chambleando. Yo creo que ya por tiempo como empresa han sacado otra flota más que lo que hacen son puras glory, puras camionetas y están chambleando el mes. Eso es lo q..."
+      }
+    ],
+    "interpretacion": "El conductor formal considera que la comisión debe ser mínima porque él asume la inversión del vehículo, combustible, mantenimiento y SOAT."
+  },
+  {
+    "patron_id": "P_BON_01",
+    "tema": "Comisiones e Incentivos Económicos",
+    "patron": "Fascinación por los bonos de metas diarias y garantizados de app",
+    "profile_affinity": "twin_b",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP08",
+      "EP09",
+      "EP10",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 24,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_014",
+        "evidencia_textual": "Y la verdad que venirte, por ejemplo, del Oval Oasis hasta por acá, que vendrían a ser como 7, 8 soles. Te está pagando 4.50, 5 soles. Y ese pequeño espacio es la ganancia.\n¿Y te cobra comisión? Creo que el Django, por ser nuevo, creo que me regala 15 viajes o algo así. O me dan un saldo a mi favor para poder trabajar. ¿Y el Andriod? El Andriod cre..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_044",
+        "evidencia_textual": "¿Cuánto por kilómetro? O sea, yo, ¿cuánto se te puede tomar? Yo, el auto era mi cálculo, en mi mental y lo cambié porque yo, como les digo, yo trabajo en camionetas y el Uber, el Cabify, inclusive antes de, trabajé con el Vic, también antes de que se vaya mi primer año cuando trabajé. un buen aplicativo que era porque te da buenos bonos la verdad y..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_050",
+        "evidencia_textual": "Y también ver del punto al punto, si lo vas a recoger o que sea adicionarle un sol más o algo. A veces también está un poquito lejos. Y te condiciona a veces a recogerlo, a veces no quieres, pero hay que ir por trabajar, pues.\nBueno, porque es un ingreso, ¿no? Es un ingreso. Pero sí hay cositas por mejorar, pero es un buen aplicativo, la verdad. Ok..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_055",
+        "evidencia_textual": "¿Qué consideras si tomas... ¿Qué consideras si tomas, aparte del precio, para tomar un viaje? Digamos, yo voy a hacer un mototaxi. ¿Qué me recomendarías, digamos? Vaya, que veas la data, pues, el usuario, como te digo, la información, la foto, que veas la calificación, más que todo, y veas la distancia, ¿no?, de punto A al punto B, y si es rentable..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_061",
+        "evidencia_textual": "Claro, un viaje de repente a un porcentaje menor ya lo va jalando. Y de ahí ya normal cobran su precio. Pero para mí, si sube la comisión, digamos que... ¿Cuánto normalmente? 10, 12%, ¿no? Entre 10 y 15, ¿no? Sí, sí, claro que sí, ¿no? Por viaje.\n¿Cómo podrías compensar eso? Aparte del costo. Para ti, ¿no? Hablando como conductor, no como pasajero...."
+      },
+      {
+        "transcript_id": "EP03",
+        "interviewee_label": "EP 03 LUIS AGUILAR INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP03_chunk_009",
+        "evidencia_textual": "Y en drive también eso. ¿Y cuál de los dos usas más? Mira, es complicado porque el Django, este... tiene un sistema de metas, de objetivos. Se está escuchando.\nCuando le pones objetivos, ya estás enganchado ahí. Entonces, este... En ese lado le doy más. Y cuando termino mi meta, ahí chaco recién... O cuando despierto de meta también, chequeo en dri..."
+      }
+    ],
+    "interpretacion": "Los bonos actúan como un motor psicológico que incentiva al conductor a mantenerse activo encadenando carreras en la plataforma."
+  },
+  {
+    "patron_id": "P_DOC_01",
+    "tema": "Documentación, Regulación y Fiscalización Municipal",
+    "patron": "Cumplimiento estricto de documentos (SOAT, Licencia B2C, Permiso Municipal) para evitar fiscalización",
+    "profile_affinity": "twin_a",
+    "entrevistados": [
+      "EP01",
+      "EP02",
+      "EP03",
+      "EP04",
+      "EP05",
+      "EP06",
+      "EP07",
+      "EP09",
+      "EP10",
+      "EP12",
+      "EP13",
+      "EP14",
+      "EP15",
+      "EP16",
+      "EP17",
+      "EP18",
+      "EP19",
+      "EP20",
+      "EP21",
+      "EP22",
+      "EP23",
+      "EP24",
+      "EP25"
+    ],
+    "total_menciones": 23,
+    "evidencia": [
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_003",
+        "evidencia_textual": "Ah, bueno, yo soy padre de familia, tengo tres hijos, soy casado. Normalmente vivo con mi esposa y con mis hijos. Bueno, yo soy de la zona de Villa María.\nYo esta moto la alquilo acá en Villa Salvador. Ya con el dueño tengo trabajando casi dos años. Y bueno, este, el aplicativo es más que todo recién así ahora, ¿no? Por estos meses, porque yo anter..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_004",
+        "evidencia_textual": "¿Cómo es con la moto? Con la moto ahorita sí tengo mi licencia vigente. Los papeles de la moto tiene todo en regla. Y con la moto prácticamente es como que es algo zonal, ¿no? Trabajo solamente en Villa Salvador.\n¿Y por qué acá y no en Villa María? Porque la moto tiene una empresa, la cual rige en todo Villa Salvador. O sea, la moto es sí, concreta..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_006",
+        "evidencia_textual": "Sí, un conocido mío ya prácticamente que ya está trabajando con el señor ya años. ¿Y esa moto está en algún grupo? Está en una empresa formal. Formal dentro del distrito de Villa Salvador.\nDentro de Villa Salvador. Exactamente. Tiene su permiso y todo.\nRige todo Villa Salvador. ¿Cómo comen? Me da curiosidad todavía. Sí, claro."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_008",
+        "evidencia_textual": "Ya bueno, el dueño instó, como yo todavía no podía recategorizar, me dijo que me separara nomás el grupo, porque son bastantes choferes. Era una flota donde yo alquilaba también caro. Que me separara hasta poder recategorizar mi licencia y poder trabajar con todos los permisos que viene a ser del auto, permiso de taxi y todo lo demás.\nY bueno, mi ú..."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_022",
+        "evidencia_textual": "Es formal. Dentro de la municipalidad tienes todos sus permisos. Y ha pasado recién nomás la revisión técnica.\nY tú tienes todas tus... Todas. Revisión técnica. Todo tienes.\nTodo tienes. Todo, todo. Entonces eso también está vigente."
+      },
+      {
+        "transcript_id": "EP02",
+        "interviewee_label": "EP 02 GERSON YMAN INDRIVE",
+        "app_affiliation": "inDrive",
+        "chunk_id": "EP02_chunk_026",
+        "evidencia_textual": "JAPE, PLIN, BCP, lo que son. De efectivo también, pero... Creo que más aplicativos. Entonces con GAFUST.\nSí, más aplicativos. O sea, tú estás haciendo, digamos, una transición ahorita en la mototaxi porque vas a regresar al taxi. Sí, sí, ahorita es mi idea, ¿no? Y el taxi también a tiempo completo.\nYo lo trabajaba por... La verdad, ahora último, me..."
+      }
+    ],
+    "interpretacion": "El conductor formal valora la tranquilidad de trabajar en regla para no perder el ingreso del día en multas o internamiento del vehículo."
+  }
+]

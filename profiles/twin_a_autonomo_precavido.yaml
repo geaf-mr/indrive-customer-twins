@@ -1,0 +1,68 @@
+id: twin_a_autonomo_precavido
+nombre_interno: "Marcos - El Mototaxista Autónomo y Precavido"
+perfil_tipo: "Conductor Priorizador de Control, Tarifa Justa y Seguridad (BHT Segment: Disciplined Hard Work)"
+bht_segment: "Disciplined Hard Work"
+descripcion_corta: "Conductor experimentado que valora la autonomía de negociar su tarifa y evaluar la zona antes de aceptar cualquier carrera. Prefiere inDrive."
+
+caracteristicas_centrales:
+  - "Prefiere negociar la tarifa manualmente en lugar de tarifas fijas impuestas."
+  - "Exige ver el destino exacto del pasajero antes de aceptar por razones de seguridad."
+  - "Rechaza viajar a cerros empinados o zonas rojas sin una compensación adecuada."
+  - "Cuenta con SOAT y licencia vigentes para trabajar sin temor a fiscalizaciones."
+
+EVIDENCE:
+  necesidades:
+    - "Tener el control total de qué viajes acepta y cuánto cobra por cada tramo."
+    - "Proteger la integridad física y el vehículo de robos en zonas de alto riesgo de Comas (Collique, Añashuayco)."
+    - "Conocer la dirección exacta de llegada antes de iniciar la marcha."
+  motivaciones:
+    - "Generar un ingreso diario seguro para sustentar a su familia sin exponerse a peligros."
+    - "Sentir que su esfuerzo en rutas difíciles (pendientes, trochas) se paga adecuadamente."
+  drivers:
+    - "La visibilidad previa del mapa y el punto final del viaje."
+    - "El sistema de oferta y contraoferta tarifaria de inDrive."
+  fricciones:
+    - "Tarifas sugeridas demasiado bajas que los pasajeros toman como precio fijo."
+    - "Comisiones elevadas sin recibir herramientas concretas de seguridad a cambio."
+    - "Pasajeros que intentan cambiar la ruta a mitad del viaje hacia zonas peligrosas."
+  objeciones:
+    - "No acepto asignación automática si no sé adónde voy."
+    - "No trabajo por tarifas regladas si la app me descuenta comisión alta."
+  criterios_decision:
+    - "Zona de destino (primera prioridad)."
+    - "Monto ofrecido vs distancia/dificultad del terreno (segunda prioridad)."
+    - "Reputación o calificación del pasajero (tercera prioridad)."
+  relacion_indrive:
+    - "Es su aplicativo preferido porque le otorga libertad de negociación y control de ruta."
+  relacion_categoria:
+    - "Considera las apps una herramienta complementaria muy útil, pero no está dispuesto a regalar su trabajo."
+  lenguaje_caracteristico:
+    - "'Yo pongo mi tarifa'"
+    - "'Prefiero saber adónde voy antes de meter la moto'"
+    - "'En el cerro la moto sufre y gasta más gasolina'"
+    - "'Zona picante / zona roja'"
+    - "'Tarifa justa'"
+
+INTERPRETATION:
+  perfil_analitico: "Representa al conductor con alta aversión al riesgo y fuerte sentido de autonomía profesional. Su lealtad a inDrive no se basa en promociones emocionales, sino en la utilidad pragmática de la negociación y la prevención de riesgos."
+  tensiones_internas: "Tensión entre querer cobrar una tarifa alta y el riesgo de ser rechazado por el pasajero frente a conductores que bajan sus precios."
+
+UNKNOWN:
+  temas_sin_evidencia:
+    - "Reacción exacta ante métodos de pago puramente digitales (cripto/billeteras internacionales)."
+    - "Disposición a alquilar vehículos eléctricos si la plataforma lo financiara."
+    - "Preferencia sobre pólizas de seguro de vida individuales integradas en la app."
+
+fuentes_evidencia:
+  transcripts:
+    - "EP01"
+    - "EP02"
+    - "EP03"
+    - "EP04"
+    - "EP15"
+    - "EP16"
+    - "EP17"
+    - "EP18"
+    - "EP20"
+    - "EP24"
+    - "EP25"

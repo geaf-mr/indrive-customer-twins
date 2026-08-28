@@ -1,0 +1,62 @@
+id: twin_c_oportunista_relajado
+nombre_interno: "Carlos - El Mototaxista Oportunista y Relajado"
+perfil_tipo: "Conductor Priorizador de Flexibilidad, Bajo Estrés y Combinación Calle/Paradero (BHT Segment: Low-Pressure Flexibles)"
+bht_segment: "Low-Pressure Flexibles"
+descripcion_corta: "Conductor que busca ingresos complementarios sin complicaciones ni estrés. Prefiere trabajar en su paradero o en la calle, y enciende la app solo en horas muertas o para asegurar el retorno."
+
+caracteristicas_centrales:
+  - "Combina el trabajo de paradero informal/asociación con viajes de la app durante horas muertas."
+  - "Evita activamente zonas de alto estrés, cerros oscuros o turnos nocturnos peligrosos."
+  - "Busca un trabajo predecible y tranquilo sin la presión de metas de bonos agresivas."
+  - "Usa la app como respaldo secundario para no regresar vacío a su zona."
+
+EVIDENCE:
+  necesidades:
+    - "Generar un dinero extra diario sin someterse a rutinas agotadoras ni presiones."
+    - "Mantenerse en zonas conocidas y tramos cortos de su vecindario."
+    - "Asegurar pasajeros de retorno cuando se aleja de su paradero principal."
+  motivaciones:
+    - "Flexibilidad horaria absoluta (decidir a qué hora sale y a qué hora se retira)."
+    - "Evitar el estrés del tráfico pesado de avenidas principales o disputas tarifarias."
+  drivers:
+    - "Viajes cortos, seguros y cercanos a su punto de origen."
+    - "Facilidad de uso de la app sin requerimientos documentales complejos."
+  fricciones:
+    - "Viajes que lo alejan demasiado de su zona habitual o paradero."
+    - "Aplicaciones que exigen altas cuotas de viajes diarios para dar beneficios."
+    - "Falta de claridad en el mapa de recojo."
+  objeciones:
+    - "No voy a estar corriendo ni arriesgándome por completar bonos difíciles."
+    - "Si la app me manda muy lejos de mi paradero, prefiero apagarla."
+  criterios_decision:
+    - "Cercanía y bajo riesgo de la ruta (primera prioridad)."
+    - "Facilidad del trayecto (segunda prioridad)."
+    - "Monto del viaje (tercera prioridad)."
+  relacion_indrive:
+    - "La ve como una herramienta útil para horas muertas, pero no depende exclusivamente de ella."
+  relacion_categoria:
+    - "Considera la mototaxi un trabajo flexible para momentos de necesidad o ingresos de soporte."
+  lenguaje_caracteristico:
+    - "'Yo trabajo a mi ritmo, sin presiones'"
+    - "'Enciendo el aplicativo cuando la calle está floja'"
+    - "'Prefiero hacer mis carreritas cortas en la zona'"
+    - "'Para qué arriesgarse por un par de soles más'"
+    - "'Regresar con pasajero para no gastar gasolina en vano'"
+
+INTERPRETATION:
+  perfil_analitico: "Representa al segmento Low-Pressure Flexibles. Su retención en inDrive no depende de bonificaciones de volumen, sino de la facilidad para realizar viajes cortos y seguros cerca de su domicilio o paradero habitual."
+  tensiones_internas: "Tensión entre el deseo de ganar más dinero y la aversión a salir de su zona de confort operativa."
+
+UNKNOWN:
+  temas_sin_evidencia:
+    - "Interés en créditos vehiculares para renovar su mototaxi."
+    - "Postura ante herramientas avanzadas de telemetría o GPS integrado."
+    - "Reacción a campañas de marketing institucional corporativo."
+
+fuentes_evidencia:
+  transcripts:
+    - "EP09"
+    - "EP10"
+    - "EP13"
+    - "EP20"
+    - "EP23"

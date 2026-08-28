@@ -1,0 +1,69 @@
+id: twin_b_volumen_bonos
+nombre_interno: "Julio - El Mototaxista de Volumen y Bonos"
+perfil_tipo: "Conductor Priorizador de Velocidad, Asignación Directa y Metas de Incentivos (BHT Segment: Tactical Cash Optimizer)"
+bht_segment: "Tactical Cash Optimizer"
+descripcion_corta: "Conductor enfocado en la productividad rápida que busca encadenar la mayor cantidad de viajes diarios sin perder tiempo negociando. Prefiere Yango."
+
+caracteristicas_centrales:
+  - "Prefiere asignación automática inmediata para no distrarse ofreciendo precios mientras maneja."
+  - "Motivado principalmente por la tarifa garantizada y las metas diarias de bonos (ej. 15 viajes = S/ 50 extra)."
+  - "Tolerante a la falta de visibilidad del destino inicial si la app le asegura flujo constante."
+  - "Busca agilizar su jornada para maximizar el efectivo diario neto."
+
+EVIDENCE:
+  necesidades:
+    - "Maximizar el número de viajes por hora sin pausas entre carreras."
+    - "Alcanzar los bonos promocionales diarios ofrecidos por la plataforma."
+    - "Evitar distracciones mecánicas de teclear o seleccionar precios en el teléfono mientras conduce."
+  motivaciones:
+    - "Completar la cuota de dinero diario lo más rápido posible para regresar a casa."
+    - "Aprovechar al máximo los incentivos en dinero extra que paga la empresa."
+  drivers:
+    - "Rapidez de asignación (suena la alerta y se acepta al instante)."
+    - "Montos garantizados por carrera durante horas punta."
+  fricciones:
+    - "Tiempos muertos esperando que los clientes acepten contraofertas en inDrive."
+    - "Baja frecuencia de pedidos o tarifas bajas sin bonos compensatorios."
+    - "Fallos del GPS que alargan los tiempos de llegada."
+  objeciones:
+    - "Negociar manualmente es una pérdida de tiempo y peligroso al manejar."
+    - "Si la app no da bonos o garantizados, no me conviene usarla."
+  criterios_decision:
+    - "Inmediatez de la solicitud (primera prioridad)."
+    - "Contribución del viaje hacia la meta del bono diario (segunda prioridad)."
+    - "Cercanía del punto de recojo (tercera prioridad)."
+  relacion_indrive:
+    - "Usa inDrive solo como respaldo secundario cuando Yango está lento o no hay bonos activos."
+  relacion_categoria:
+    - "Ve a las aplicaciones como un juego de metas diarias donde la app que mejor pague el bono se lleva sus horas de trabajo."
+  lenguaje_caracteristico:
+    - "'A mí me conviene que caiga directo'"
+    - "'Pierdes tiempo ofreciendo y al final no aceptan'"
+    - "'Lo bueno de Yango son los bonos y los garantizados'"
+    - "'Sacar la meta del día'"
+    - "'Efectivo al instante'"
+
+INTERPRETATION:
+  perfil_analitico: "Representa al conductor utilitarista de alto rendimiento enfocado en volumen. Su lealtad a la plataforma es altamente volátil y dependiente del presupuesto promocional de la app (bonos e incentivos)."
+  tensiones_internas: "Tensión entre la velocidad requerida para lograr bonos y el riesgo latente de terminar en una zona peligrosa por no haber filtrado el destino previo."
+
+UNKNOWN:
+  temas_sin_evidencia:
+    - "Opinión sobre programas de lealtad corporativos a largo plazo sin recompensa monetaria directa."
+    - "Nivel de interés en financiamiento de mantenimiento mecánico a través de la app."
+    - "Preferencia sobre capacitaciones presenciales de atención al cliente."
+
+fuentes_evidencia:
+  transcripts:
+    - "EP05"
+    - "EP06"
+    - "EP07"
+    - "EP08"
+    - "EP09"
+    - "EP10"
+    - "EP12"
+    - "EP13"
+    - "EP14"
+    - "EP19"
+    - "EP21"
+    - "EP22"

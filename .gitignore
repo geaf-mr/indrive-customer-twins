@@ -1,0 +1,24 @@
+# Confidential raw transcripts
+/Transcripts/
+/data/raw/
+.env
+.streamlit/secrets.toml
+
+# Environment and secrets
+.env
+*.env
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# IDE, Sync & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.tmp
+*.terabox*
+
