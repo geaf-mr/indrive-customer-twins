@@ -132,7 +132,8 @@ Instrucciones finales: Responde de forma concisa, directa y natural como {profil
             user_prompt += "\nNOTA: Existe muy baja evidencia sobre este tema. Si respondes, indica primero: '" + UNSUPPORTED_FALLBACK_PHRASE + "' y luego plantea una breve hipótesis explícita."
 
         # Step 4: Generate response
-        response_text = self.provider.generate(system_prompt, user_prompt)
+        provider = get_llm_provider()
+        response_text = provider.generate(system_prompt, user_prompt)
 
         return {
             "response": response_text,
