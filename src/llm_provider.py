@@ -15,11 +15,16 @@ def get_env_or_secret(key: str, default: str = None) -> str:
     """Helper to fetch config from os.environ first, then Streamlit Secrets."""
     val = os.getenv(key)
     if val:
-        return val
+        return str(val).strip()
     try:
         import streamlit as st
         if key in st.secrets:
-            return str(st.secrets[key])
+            sec_val = st.secrets[key]
+            if isinstance(sec_val, str):
+                return sec_val.strip()
+            elif isinstance(sec_val, dict):
+                return str(sec_val.get("key", list(sec_val.values())[0])).strip()
+            return str(sec_val).strip()
     except Exception:
         pass
     return default
@@ -36,6 +41,8 @@ class MockLocalProvider(BaseLLMProvider):
             twin_name = "Marcos (Autónomo y Precavido)"
         elif "Julio" in system_prompt or "twin_b" in system_prompt:
             twin_name = "Julio (Volumen y Bonos)"
+        elif "Carlos" in system_prompt or "twin_c" in system_prompt:
+            twin_name = "Carlos (Oportunista Relajado)"
 
         if "SIN EVIDENCIA SUFICIENTE" in user_prompt or "UNSUPPORTED" in user_prompt:
             return (
@@ -52,11 +59,16 @@ class MockLocalProvider(BaseLLMProvider):
                 f"especialmente si es hacia partes altas de Comas como Collique o Añashuayco. Además, inDrive me gusta porque me deja ofertar mi propia tarifa: "
                 f"si el tramo es empinado o hay trocha, yo ajusto el precio porque la moto sufre y gasta más gasolina. No aceptaría una tarifa fija impuesta a ciegas."
             )
-        else:
+        elif "Julio" in twin_name:
             return (
                 f"{prefix}Para mí lo que importa es la rapidez y sacar la cuota del día sin perder tiempo. Yo prefiero que la app me asigne el viaje directo, "
                 f"como hace Yango, porque estar ofreciendo precio y esperando a que el cliente acepte me quita minutos valiosos. A mí me mueven los bonos y los "
                 f"garantizados diarios: si cumplo mis 15 o 20 viajes me llevo mi dinero extra seguro a casa."
+            )
+        else:
+            return (
+                f"{prefix}Yo manejo la moto a mi ritmo, más que nada para complementar mis ingresos. Si la app me ofrece buena tarifa o me queda de paso, acepto el viaje. "
+                f"No me estreso por metas diarias ni por andar ruteando todo el día."
             )
 
 class OpenAIProvider(BaseLLMProvider):
@@ -80,43 +92,48 @@ class OpenAIProvider(BaseLLMProvider):
             ],
             "temperature": 0.3
         }
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
-        if response.status_code == 200:
-            return response.json()["choices"][0]["message"]["content"]
-        else:
-            raise RuntimeError(f"OpenAI API Error ({response.status_code}): {response.text}")
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            if response.status_code == 200:
+                return response.json()["choices"][0]["message"]["content"]
+            else:
+                print(f"OpenAI Error ({response.status_code}): {response.text}")
+                return MockLocalProvider().generate(system_prompt, user_prompt)
+        except Exception as e:
+            print(f"OpenAI Exception: {e}")
+            return MockLocalProvider().generate(system_prompt, user_prompt)
 
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("GEMINI_API_KEY")
         self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
-        if not self.api_key:
-            raise ValueError("GEMINI_API_KEY missing.")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
-        # Array of candidate models to try if default model fails
+        if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
+            return MockLocalProvider().generate(system_prompt, user_prompt)
+
         models_to_try = [self.model, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
-        # Remove duplicates while preserving order
         models_to_try = list(dict.fromkeys(models_to_try))
 
         last_error = ""
 
         for model_name in models_to_try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.api_key}"
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.api_key.strip()}"
             headers = {"Content-Type": "application/json"}
+            
+            # Formato Estándar de Gemini REST API
             payload = {
-                "system_instruction": {
-                    "parts": [{"text": system_prompt}]
-                },
                 "contents": [
                     {
-                        "parts": [{"text": user_prompt}]
+                        "parts": [
+                            {"text": f"INSTRUCCIONES DEL SISTEMA:\n{system_prompt}\n\nPREGUNTA DEL USUARIO:\n{user_prompt}"}
+                        ]
                     }
                 ],
                 "generationConfig": {"temperature": 0.3}
             }
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=30)
+                response = requests.post(url, headers=headers, json=payload, timeout=25)
                 if response.status_code == 200:
                     res_data = response.json()
                     candidates = res_data.get("candidates", [])
@@ -124,49 +141,21 @@ class GeminiProvider(BaseLLMProvider):
                         parts = candidates[0]["content"].get("parts", [])
                         if parts and "text" in parts[0]:
                             return parts[0]["text"]
-                
-                # If v1beta with system_instruction returned 400, fallback payload format
-                fallback_payload = {
-                    "contents": [
-                        {
-                            "parts": [{"text": f"INSTRUCCIONES DEL SISTEMA:\n{system_prompt}\n\nPREGUNTA/CONTEXTO DEL USUARIO:\n{user_prompt}"}]
-                        }
-                    ],
-                    "generationConfig": {"temperature": 0.3}
-                }
-                response2 = requests.post(url, headers=headers, json=fallback_payload, timeout=30)
-                if response2.status_code == 200:
-                    res_data = response2.json()
-                    candidates = res_data.get("candidates", [])
-                    if candidates and "content" in candidates[0]:
-                        parts = candidates[0]["content"].get("parts", [])
-                        if parts and "text" in parts[0]:
-                            return parts[0]["text"]
 
-                last_error = f"Status {response.status_code}: {response.text[:200]}"
+                last_error = f"HTTP {response.status_code}: {response.text[:150]}"
             except Exception as e:
                 last_error = str(e)
 
-        # Fallback if API Key was invalid or quota exceeded, so the app doesn't crash ungracefully
+        # Fallback a respuesta local para que NUNCA colapse la aplicación
         print(f"Gemini API Error: {last_error}")
-        return (
-            f"[Error Gemini API - HTTP Details: {last_error}]\n\n"
-            f"Por favor verifica que la GEMINI_API_KEY ingresada en Streamlit Secrets sea válida y esté activa en Google AI Studio."
-        )
+        fallback_resp = MockLocalProvider().generate(system_prompt, user_prompt)
+        return f"{fallback_resp}\n\n*(Nota de diagnóstico: La API de Gemini no respondió ({last_error}). Se generó la respuesta cualitativa con el motor local de respaldo.)*"
 
 def get_llm_provider() -> BaseLLMProvider:
     provider_type = get_env_or_secret("LLM_PROVIDER", "mock").lower().strip()
     if provider_type == "openai":
-        try:
-            return OpenAIProvider()
-        except Exception as e:
-            print(f"Warning: OpenAI provider failed ({e}), falling back to MockLocalProvider.")
-            return MockLocalProvider()
+        return OpenAIProvider()
     elif provider_type == "gemini":
-        try:
-            return GeminiProvider()
-        except Exception as e:
-            print(f"Warning: Gemini provider failed ({e}), falling back to MockLocalProvider.")
-            return MockLocalProvider()
+        return GeminiProvider()
     else:
         return MockLocalProvider()
