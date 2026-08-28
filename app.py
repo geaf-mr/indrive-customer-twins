@@ -21,6 +21,60 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# ---------------------------------------------------------
+# AUTENTICACIÓN Y SEGURIDAD (PILOTO CRIBA x inDrive)
+# ---------------------------------------------------------
+def check_password():
+    """Retorna True si el usuario ha iniciado sesión con credenciales válidas."""
+    def password_entered():
+        # Obtener contraseñas válidas desde secrets o valores por defecto
+        valid_passwords = st.secrets.get("passwords", {
+            "admin": "Criba2026*",
+            "indrive": "InDrivePiloto2026"
+        })
+        user = st.session_state.get("login_username", "").strip()
+        passwd = st.session_state.get("login_password", "").strip()
+        
+        if user in valid_passwords and valid_passwords[user] == passwd:
+            st.session_state["authenticated"] = True
+            st.session_state["authenticated_user"] = user
+            if "login_password" in st.session_state:
+                del st.session_state["login_password"]
+        else:
+            st.session_state["authenticated"] = False
+
+    if st.session_state.get("authenticated", False):
+        return True
+
+    # Renderizar pantalla de login con branding de CRIBA Research
+    st.markdown("""
+    <div style="max-width: 440px; margin: 4rem auto 1.5rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-top: 5px solid #10B981; text-align: center;">
+        <img src="https://cribaresearch.com/wp-content/uploads/2024/07/cropped-FAVICON-Verde@300x-192x192.png" width="64" style="margin-bottom: 0.8rem;">
+        <h2 style="color: #0F172A; margin-bottom: 0.2rem; font-weight: 700;">CRIBA Research</h2>
+        <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Plataforma Analítica de Digital Customer Twins (inDrive)</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col_l1, col_l2, col_l3 = st.columns([1, 1.2, 1])
+    with col_l2:
+        with st.form("login_form"):
+            st.markdown("##### 🔒 Acceso Restringido")
+            st.text_input("Usuario", key="login_username", placeholder="Ej: indrive o admin")
+            st.text_input("Contraseña", type="password", key="login_password")
+            submit = st.form_submit_button("Iniciar Sesión", use_container_width=True)
+            if submit:
+                password_entered()
+                if not st.session_state.get("authenticated", False):
+                    st.error("❌ Usuario o contraseña incorrectos")
+                else:
+                    st.rerun()
+
+    return False
+
+if not check_password():
+    st.stop()
+
+
 # Custom CSS matching CRIBA Research Branding (Emerald Green & Slate Navy)
 st.markdown("""
 <style>
@@ -128,6 +182,13 @@ st.sidebar.image("https://cribaresearch.com/wp-content/uploads/2024/07/cropped-F
 st.sidebar.markdown("### **CRIBA Research**")
 st.sidebar.caption("Qualitative AI Platform | inDrive Customer Twins")
 
+user_logged = st.session_state.get("authenticated_user", "Usuario")
+st.sidebar.success(f"👤 Sesión: `{user_logged}`")
+
+if st.sidebar.button("🚪 Cerrar Sesión"):
+    st.session_state["authenticated"] = False
+    st.rerun()
+
 st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
     "Selecciona un Modo de Análisis:",
@@ -142,7 +203,7 @@ selected_mode = st.sidebar.radio(
 
 st.sidebar.markdown("---")
 provider_name = os.getenv("LLM_PROVIDER", "mock").upper()
-st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos BHT**: 3 Twins\n\n*(Transcripts preservados localmente en `/data/`)*")
+st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos BHT**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
 
 DEMO_QUESTIONS = [
     "¿Por qué prefieres proponer y negociar la tarifa manualmente en lugar de una tarifa fija?",
