@@ -1,7 +1,7 @@
 """
 Decoupled LLM Provider layer.
 Supports 'mock' (offline), 'openai', and 'gemini' via lightweight HTTP requests.
-Sends ONLY minimal evidence snippets to external APIs for privacy.
+Reads config from both environment variables (.env) and Streamlit Secrets.
 """
 
 import os
@@ -11,6 +11,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def get_env_or_secret(key: str, default: str = None) -> str:
+    """Helper to fetch config from os.environ first, then Streamlit Secrets."""
+    val = os.getenv(key)
+    if val:
+        return val
+    try:
+        import streamlit as st
+        if key in st.secrets:
+            return str(st.secrets[key])
+    except Exception:
+        pass
+    return default
+
 class BaseLLMProvider:
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         raise NotImplementedError
@@ -18,25 +31,21 @@ class BaseLLMProvider:
 class MockLocalProvider(BaseLLMProvider):
     """Zero API key offline provider for demonstration and local testing."""
     def generate(self, system_prompt: str, user_prompt: str) -> str:
-        # Extract twin name from system prompt if possible
         twin_name = "el conductor"
         if "Marcos" in system_prompt or "twin_a" in system_prompt:
             twin_name = "Marcos (Autónomo y Precavido)"
         elif "Julio" in system_prompt or "twin_b" in system_prompt:
             twin_name = "Julio (Volumen y Bonos)"
 
-        # Check if context contains explicit unsupported marker
         if "SIN EVIDENCIA SUFICIENTE" in user_prompt or "UNSUPPORTED" in user_prompt:
             return (
                 f"Como {twin_name}, debo ser claro: El material disponible de la investigación cualitativa no permite inferir con suficiente confianza "
                 f"cómo reaccionaría mi perfil ante este punto específico. Sin embargo, como hipótesis exploratoria basada en mi patrón general..."
             )
 
-        # Check if exploratory scenario tag is needed
         is_exploratory = "EXPLORATORY" in user_prompt.upper() or "HIPOTETICO" in user_prompt.upper()
         prefix = "[EXPLORATORY SCENARIO] " if is_exploratory else ""
 
-        # Construct grounded response based on user prompt content
         if "Marcos" in twin_name:
             return (
                 f"{prefix}Mira, para mí lo primordial es el control y la seguridad. Yo necesito ver exactamente a dónde va el pasajero antes de mover la mototaxi, "
@@ -52,10 +61,10 @@ class MockLocalProvider(BaseLLMProvider):
 
 class OpenAIProvider(BaseLLMProvider):
     def __init__(self):
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+        self.api_key = get_env_or_secret("OPENAI_API_KEY")
+        self.model = get_env_or_secret("OPENAI_MODEL", "gpt-4o-mini")
         if not self.api_key:
-            raise ValueError("OPENAI_API_KEY missing in environment variables.")
+            raise ValueError("OPENAI_API_KEY missing.")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         url = "https://api.openai.com/v1/chat/completions"
@@ -79,33 +88,74 @@ class OpenAIProvider(BaseLLMProvider):
 
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
-        self.api_key = os.getenv("GEMINI_API_KEY")
-        self.model = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        self.api_key = get_env_or_secret("GEMINI_API_KEY")
+        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
         if not self.api_key:
-            raise ValueError("GEMINI_API_KEY missing in environment variables.")
+            raise ValueError("GEMINI_API_KEY missing.")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent?key={self.api_key}"
-        headers = {"Content-Type": "application/json"}
-        payload = {
-            "contents": [
-                {
-                    "parts": [
-                        {"text": f"SYSTEM INSTRUCTIONS:\n{system_prompt}\n\nUSER PROMPT:\n{user_prompt}"}
-                    ]
+        # Array of candidate models to try if default model fails
+        models_to_try = [self.model, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
+        # Remove duplicates while preserving order
+        models_to_try = list(dict.fromkeys(models_to_try))
+
+        last_error = ""
+
+        for model_name in models_to_try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.api_key}"
+            headers = {"Content-Type": "application/json"}
+            payload = {
+                "system_instruction": {
+                    "parts": [{"text": system_prompt}]
+                },
+                "contents": [
+                    {
+                        "parts": [{"text": user_prompt}]
+                    }
+                ],
+                "generationConfig": {"temperature": 0.3}
+            }
+            try:
+                response = requests.post(url, headers=headers, json=payload, timeout=30)
+                if response.status_code == 200:
+                    res_data = response.json()
+                    candidates = res_data.get("candidates", [])
+                    if candidates and "content" in candidates[0]:
+                        parts = candidates[0]["content"].get("parts", [])
+                        if parts and "text" in parts[0]:
+                            return parts[0]["text"]
+                
+                # If v1beta with system_instruction returned 400, fallback payload format
+                fallback_payload = {
+                    "contents": [
+                        {
+                            "parts": [{"text": f"INSTRUCCIONES DEL SISTEMA:\n{system_prompt}\n\nPREGUNTA/CONTEXTO DEL USUARIO:\n{user_prompt}"}]
+                        }
+                    ],
+                    "generationConfig": {"temperature": 0.3}
                 }
-            ],
-            "generationConfig": {"temperature": 0.3}
-        }
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
-        if response.status_code == 200:
-            res_data = response.json()
-            return res_data["candidates"][0]["content"]["parts"][0]["text"]
-        else:
-            raise RuntimeError(f"Gemini API Error ({response.status_code}): {response.text}")
+                response2 = requests.post(url, headers=headers, json=fallback_payload, timeout=30)
+                if response2.status_code == 200:
+                    res_data = response2.json()
+                    candidates = res_data.get("candidates", [])
+                    if candidates and "content" in candidates[0]:
+                        parts = candidates[0]["content"].get("parts", [])
+                        if parts and "text" in parts[0]:
+                            return parts[0]["text"]
+
+                last_error = f"Status {response.status_code}: {response.text[:200]}"
+            except Exception as e:
+                last_error = str(e)
+
+        # Fallback if API Key was invalid or quota exceeded, so the app doesn't crash ungracefully
+        print(f"Gemini API Error: {last_error}")
+        return (
+            f"[Error Gemini API - HTTP Details: {last_error}]\n\n"
+            f"Por favor verifica que la GEMINI_API_KEY ingresada en Streamlit Secrets sea válida y esté activa en Google AI Studio."
+        )
 
 def get_llm_provider() -> BaseLLMProvider:
-    provider_type = os.getenv("LLM_PROVIDER", "mock").lower().strip()
+    provider_type = get_env_or_secret("LLM_PROVIDER", "mock").lower().strip()
     if provider_type == "openai":
         try:
             return OpenAIProvider()
