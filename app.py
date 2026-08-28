@@ -80,18 +80,17 @@ engine, fg_engine = load_engines()
 # Sidebar Setup
 st.sidebar.image("https://img.icons8.com/color/96/user-credentials.png", width=64)
 st.sidebar.title("Digital Customer Twins")
-st.sidebar.caption("Demo Comercial & Metodológica | CRIBA x inDrive")
+st.sidebar.caption("Plataforma Analítica de Gemelos Digitales | inDrive")
 
 st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
-    "Selecciona un Modo de Demo:",
+    "Selecciona un Modo de Análisis:",
     [
         "🎙️ Modo Focus Group Interactivo",
         "⚔️ Modo Comparación Side-by-Side",
         "💬 Modo Chat Individual",
         "📑 Fichas de Perfil (Taxonomía BHT)",
-        "🔍 Panel de Evidencia Cualitativa",
-        "💡 Valor Comercial & Metodología"
+        "🔍 Panel de Evidencia Cualitativa"
     ]
 )
 
@@ -369,12 +368,4 @@ elif selected_mode == "🔍 Panel de Evidencia Cualitativa":
                 for ev in item["evidencia"]:
                     st.markdown(f"- **[{ev['transcript_id']}] {ev['interviewee_label']}**: *\"{ev['evidencia_textual']}\"*")
 
-# ---------------------------------------------------------
-# MODO 6: VALOR COMERCIAL
-# ---------------------------------------------------------
-elif selected_mode == "💡 Valor Comercial & Metodología":
-    st.subheader("💡 Propuesta de Valor Comercial & Metodología")
-    val_file = "VALUE_PROPOSITION.md"
-    if os.path.exists(val_file):
-        with open(val_file, "r", encoding="utf-8") as f:
-            st.markdown(f.read())
+
