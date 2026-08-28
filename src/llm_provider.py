@@ -104,19 +104,20 @@ class OpenAIProvider(BaseLLMProvider):
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("GEMINI_API_KEY")
-        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
+        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-pro")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
             return MockLocalProvider().generate(system_prompt, user_prompt)
 
         endpoints_to_try = [
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent",
+            f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent",
             f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
             f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-            f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent"
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
         ]
         endpoints_to_try = list(dict.fromkeys(endpoints_to_try))
 
