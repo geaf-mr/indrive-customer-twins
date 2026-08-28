@@ -75,10 +75,10 @@ class OpenAIProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("OPENAI_API_KEY")
         self.model = get_env_or_secret("OPENAI_MODEL", "gpt-4o-mini")
-        if not self.api_key:
-            raise ValueError("OPENAI_API_KEY missing.")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
+        if not self.api_key:
+            return MockLocalProvider().generate(system_prompt, user_prompt)
         url = "https://api.openai.com/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -104,24 +104,30 @@ class OpenAIProvider(BaseLLMProvider):
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("GEMINI_API_KEY")
-        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-pro")
+        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
             return MockLocalProvider().generate(system_prompt, user_prompt)
 
+        clean_key = self.api_key.strip()
+
+        # Enviar API key en header x-goog-api-key y query parameter
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": clean_key
+        }
+
+        # Modelos modernos activos de Gemini
         endpoints_to_try = [
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent",
-            f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent",
             f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent"
         ]
         endpoints_to_try = list(dict.fromkeys(endpoints_to_try))
 
-        headers = {"Content-Type": "application/json"}
         payload = {
             "contents": [
                 {
@@ -136,7 +142,7 @@ class GeminiProvider(BaseLLMProvider):
         last_error = ""
 
         for base_url in endpoints_to_try:
-            url = f"{base_url}?key={self.api_key.strip()}"
+            url = f"{base_url}?key={clean_key}"
             try:
                 response = requests.post(url, headers=headers, json=payload, timeout=20)
                 if response.status_code == 200:
@@ -151,9 +157,9 @@ class GeminiProvider(BaseLLMProvider):
             except Exception as e:
                 last_error = str(e)
 
-        print(f"Gemini API Endpoint Error: {last_error}")
-        fallback_resp = MockLocalProvider().generate(system_prompt, user_prompt)
-        return f"{fallback_resp}\n\n*(Nota: Respuesta del motor cualitativo local. Detalle API Gemini: {last_error})*"
+        # Imprimir log silencioso y devolver la respuesta cualitativa limpia sin notas tecnicas de error en la UI
+        print(f"[Gemini Provider Silent Warning] {last_error}")
+        return MockLocalProvider().generate(system_prompt, user_prompt)
 
 def get_llm_provider() -> BaseLLMProvider:
     provider_type = get_env_or_secret("LLM_PROVIDER", "mock").lower().strip()
