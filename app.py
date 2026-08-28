@@ -15,43 +15,88 @@ from src.twin_engine import DigitalTwinEngine
 from src.focus_group import FocusGroupEngine
 
 st.set_page_config(
-    page_title="Digital Customer Twins & Focus Group - inDrive MVP",
-    page_icon="🤖",
+    page_title="CRIBA Research - Digital Customer Twins",
+    page_icon="https://cribaresearch.com/wp-content/uploads/2024/07/cropped-FAVICON-Verde@300x-32x32.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for polished commercial demo feel
+# Custom CSS matching CRIBA Research Branding (Emerald Green & Slate Navy)
 st.markdown("""
 <style>
-    .main-title {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #1E293B;
-        margin-bottom: 0.2rem;
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+    
+    html, body, [class*="css"] {
+        font-family: 'Montserrat', sans-serif;
     }
-    .sub-title {
-        font-size: 1.05rem;
-        color: #64748B;
+    
+    /* Header Brand Styling */
+    .stAppViewMain {
+        background-color: #F8FAFC;
+    }
+    
+    .criba-header {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        padding: 1.2rem 1.8rem;
+        border-radius: 12px;
+        color: white;
         margin-bottom: 1.5rem;
+        border-left: 6px solid #10B981;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
     }
+    
+    .criba-header h1 {
+        color: #FFFFFF !important;
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+    }
+    
+    .criba-header p {
+        color: #94A3B8 !important;
+        font-size: 0.95rem !important;
+        margin-top: 0.3rem !important;
+        margin-bottom: 0 !important;
+    }
+
     .twin-card-header {
         font-size: 1.15rem;
         font-weight: 600;
         color: #0F172A;
-        background-color: #F1F5F9;
-        padding: 0.6rem 1rem;
+        background-color: #F0FDF4;
+        border: 1px solid #A7F3D0;
+        padding: 0.7rem 1.1rem;
         border-radius: 8px;
         margin-bottom: 0.8rem;
     }
+    
     .fg-speaker-card {
         background-color: #FFFFFF;
-        border-left: 4px solid #3B82F6;
-        padding: 0.8rem 1rem;
-        border-radius: 6px;
-        margin-bottom: 0.8rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        border-left: 4px solid #10B981;
+        padding: 0.9rem 1.1rem;
+        border-radius: 8px;
+        margin-bottom: 0.9rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        border-top: 1px solid #F1F5F9;
+        border-right: 1px solid #F1F5F9;
+        border-bottom: 1px solid #F1F5F9;
     }
+    
+    /* Primary buttons in CRIBA Emerald */
+    .stButton>button {
+        background-color: #10B981 !important;
+        color: white !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        border: none !important;
+        padding: 0.5rem 1.2rem !important;
+        transition: all 0.2s ease !important;
+    }
+    .stButton>button:hover {
+        background-color: #059669 !important;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+    }
+    
     .unsupported-badge {
         background-color: #FEF2F2;
         color: #991B1B;
@@ -60,6 +105,7 @@ st.markdown("""
         font-weight: 600;
         font-size: 0.85rem;
     }
+    
     .exploratory-badge {
         background-color: #FFFBEB;
         color: #B45309;
@@ -77,10 +123,10 @@ def load_engines():
 
 engine, fg_engine = load_engines()
 
-# Sidebar Setup
-st.sidebar.image("https://img.icons8.com/color/96/user-credentials.png", width=64)
-st.sidebar.title("Digital Customer Twins")
-st.sidebar.caption("Plataforma Analítica de Gemelos Digitales | inDrive")
+# Sidebar Setup with CRIBA Research Logo
+st.sidebar.image("https://cribaresearch.com/wp-content/uploads/2024/07/cropped-FAVICON-Verde@300x-192x192.png", width=70)
+st.sidebar.markdown("### **CRIBA Research**")
+st.sidebar.caption("Qualitative AI Platform | inDrive Customer Twins")
 
 st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
@@ -119,8 +165,12 @@ FOCUS_GROUP_TOPICS = [
     "¿Qué haría que usen inDrive como su app principal el 100% de su jornada laboral?"
 ]
 
-st.markdown("<div class='main-title'>Digital Customer Twins & Focus Group Interactivo</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub-title'>Agentes sintéticos cualitativos derivados de 25 entrevistas reales en Lima | Alineados con la Segmentación BHT de inDrive</div>", unsafe_allow_html=True)
+st.markdown("""
+<div class="criba-header">
+    <h1>CRIBA Research • Digital Customer Twins</h1>
+    <p>Motor de Investigación Cualitativa con IA derivado de 25 entrevistas en profundidad | Estudio inDrive & Categoría Mototaxis / Taxis</p>
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # MODO 1: FOCUS GROUP INTERACTIVO (NUEVO)
