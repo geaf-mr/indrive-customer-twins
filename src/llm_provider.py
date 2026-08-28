@@ -97,10 +97,8 @@ class OpenAIProvider(BaseLLMProvider):
             if response.status_code == 200:
                 return response.json()["choices"][0]["message"]["content"]
             else:
-                print(f"OpenAI Error ({response.status_code}): {response.text}")
                 return MockLocalProvider().generate(system_prompt, user_prompt)
-        except Exception as e:
-            print(f"OpenAI Exception: {e}")
+        except Exception:
             return MockLocalProvider().generate(system_prompt, user_prompt)
 
 class GeminiProvider(BaseLLMProvider):
@@ -112,28 +110,34 @@ class GeminiProvider(BaseLLMProvider):
         if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
             return MockLocalProvider().generate(system_prompt, user_prompt)
 
-        models_to_try = [self.model, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
-        models_to_try = list(dict.fromkeys(models_to_try))
+        endpoints_to_try = [
+            f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent"
+        ]
+        endpoints_to_try = list(dict.fromkeys(endpoints_to_try))
+
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": f"INSTRUCCIONES DEL SISTEMA:\n{system_prompt}\n\nPREGUNTA DEL USUARIO:\n{user_prompt}"}
+                    ]
+                }
+            ],
+            "generationConfig": {"temperature": 0.3}
+        }
 
         last_error = ""
 
-        for model_name in models_to_try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.api_key.strip()}"
-            headers = {"Content-Type": "application/json"}
-            
-            # Formato Estándar de Gemini REST API
-            payload = {
-                "contents": [
-                    {
-                        "parts": [
-                            {"text": f"INSTRUCCIONES DEL SISTEMA:\n{system_prompt}\n\nPREGUNTA DEL USUARIO:\n{user_prompt}"}
-                        ]
-                    }
-                ],
-                "generationConfig": {"temperature": 0.3}
-            }
+        for base_url in endpoints_to_try:
+            url = f"{base_url}?key={self.api_key.strip()}"
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=25)
+                response = requests.post(url, headers=headers, json=payload, timeout=20)
                 if response.status_code == 200:
                     res_data = response.json()
                     candidates = res_data.get("candidates", [])
@@ -142,14 +146,13 @@ class GeminiProvider(BaseLLMProvider):
                         if parts and "text" in parts[0]:
                             return parts[0]["text"]
 
-                last_error = f"HTTP {response.status_code}: {response.text[:150]}"
+                last_error = f"HTTP {response.status_code}: {response.text[:120]}"
             except Exception as e:
                 last_error = str(e)
 
-        # Fallback a respuesta local para que NUNCA colapse la aplicación
-        print(f"Gemini API Error: {last_error}")
+        print(f"Gemini API Endpoint Error: {last_error}")
         fallback_resp = MockLocalProvider().generate(system_prompt, user_prompt)
-        return f"{fallback_resp}\n\n*(Nota de diagnóstico: La API de Gemini no respondió ({last_error}). Se generó la respuesta cualitativa con el motor local de respaldo.)*"
+        return f"{fallback_resp}\n\n*(Nota: Respuesta del motor cualitativo local. Detalle API Gemini: {last_error})*"
 
 def get_llm_provider() -> BaseLLMProvider:
     provider_type = get_env_or_secret("LLM_PROVIDER", "mock").lower().strip()
