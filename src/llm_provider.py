@@ -47,9 +47,11 @@ def test_gemini_connection() -> dict:
     key_prefix = clean_key[:6] + "..." + clean_key[-4:] if len(clean_key) > 10 else "SHORT_KEY"
 
     models_to_test = [
+        "gemini-3.6-flash",
+        "gemini-3.6-pro",
+        "gemini-3.0-flash",
         "gemini-1.5-flash",
-        "gemini-1.5-pro",
-        "gemini-2.0-flash"
+        "gemini-1.5-pro"
     ]
     
     results = []
@@ -166,7 +168,7 @@ class OpenAIProvider(BaseLLMProvider):
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("GEMINI_API_KEY")
-        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
+        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-3.6-flash")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
@@ -181,10 +183,11 @@ class GeminiProvider(BaseLLMProvider):
 
         endpoints = [
             (f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent", self.model),
+            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent", "gemini-3.6-flash"),
+            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-pro:generateContent", "gemini-3.6-pro"),
+            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash:generateContent", "gemini-3.0-flash"),
             ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent", "gemini-1.5-flash"),
-            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", "gemini-1.5-pro"),
-            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent", "gemini-2.0-flash"),
-            ("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", "gemini-1.5-flash")
+            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", "gemini-1.5-pro")
         ]
 
         payload = {
