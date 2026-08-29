@@ -211,20 +211,21 @@ st.sidebar.markdown("---")
 provider_name = os.getenv("LLM_PROVIDER", "mock").upper()
 st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos inDrive**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
 
-with st.sidebar.expander("🔧 Diagnóstico Conexión Gemini"):
-    if st.button("🧪 Probar Conexión API"):
-        with st.spinner("Enviando paquete de prueba a Google Gemini..."):
-            diag = test_gemini_connection()
-            if diag["success"]:
-                st.success(f"✅ {diag['message']}")
-                st.caption(f"Clave detectada: `{diag.get('key_prefix')}`")
-            else:
-                st.error(f"❌ {diag['message']}")
-                st.caption(f"Clave detectada: `{diag.get('key_prefix', 'NO_ENCONTRADA')}`")
-                if "details" in diag:
-                    st.markdown("**Detalles HTTP de Google:**")
-                    for d in diag["details"]:
-                        st.caption(f"• {d}")
+if user_logged.lower() == "admin":
+    with st.sidebar.expander("🔧 Diagnóstico Conexión Gemini (Admin)"):
+        if st.button("🧪 Probar Conexión API"):
+            with st.spinner("Enviando paquete de prueba a Google Gemini..."):
+                diag = test_gemini_connection()
+                if diag["success"]:
+                    st.success(f"✅ {diag['message']}")
+                    st.caption(f"Clave detectada: `{diag.get('key_prefix')}`")
+                else:
+                    st.error(f"❌ {diag['message']}")
+                    st.caption(f"Clave detectada: `{diag.get('key_prefix', 'NO_ENCONTRADA')}`")
+                    if "details" in diag:
+                        st.markdown("**Detalles HTTP de Google:**")
+                        for d in diag["details"]:
+                            st.caption(f"• {d}")
 
 DEMO_QUESTIONS = [
     "¿Por qué prefieres proponer y negociar la tarifa manualmente en lugar de una tarifa fija?",
