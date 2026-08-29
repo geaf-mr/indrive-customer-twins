@@ -2,6 +2,7 @@
 Decoupled LLM Provider layer.
 Supports 'mock' (offline), 'openai', and 'gemini' via lightweight HTTP requests.
 Reads config from both environment variables (.env) and Streamlit Secrets.
+Includes live diagnostic tools to test Gemini API connectivity.
 """
 
 import os
@@ -28,6 +29,62 @@ def get_env_or_secret(key: str, default: str = None) -> str:
     except Exception:
         pass
     return default
+
+def test_gemini_connection() -> dict:
+    """Diagnostic helper function to test live Gemini API connection."""
+    api_key = get_env_or_secret("GEMINI_API_KEY")
+    provider_setting = get_env_or_secret("LLM_PROVIDER", "NO_CONFIGURADO")
+    
+    if not api_key:
+        return {
+            "success": False,
+            "provider_setting": provider_setting,
+            "key_found": False,
+            "message": "No se encontró GEMINI_API_KEY en .env ni en st.secrets."
+        }
+    
+    clean_key = api_key.strip()
+    key_prefix = clean_key[:6] + "..." + clean_key[-4:] if len(clean_key) > 10 else "SHORT_KEY"
+
+    models_to_test = [
+        "gemini-1.5-flash",
+        "gemini-1.5-pro",
+        "gemini-2.0-flash"
+    ]
+    
+    results = []
+    
+    for m in models_to_test:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={clean_key}"
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": clean_key
+        }
+        payload = {
+            "contents": [{"parts": [{"text": "Hola"}]}]
+        }
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=10)
+            if resp.status_code == 200:
+                return {
+                    "success": True,
+                    "provider_setting": provider_setting,
+                    "key_prefix": key_prefix,
+                    "working_model": m,
+                    "message": f"Conexión Exitosa con Google Gemini ({m})"
+                }
+            else:
+                results.append(f"Model {m} -> HTTP {resp.status_code}: {resp.text[:180]}")
+        except Exception as e:
+            results.append(f"Model {m} -> Error: {str(e)}")
+            
+    return {
+        "success": False,
+        "provider_setting": provider_setting,
+        "key_prefix": key_prefix,
+        "details": results,
+        "message": "Ningún endpoint de Gemini respondió exitosamente."
+    }
 
 class BaseLLMProvider:
     def generate(self, system_prompt: str, user_prompt: str) -> str:
@@ -109,7 +166,7 @@ class OpenAIProvider(BaseLLMProvider):
 class GeminiProvider(BaseLLMProvider):
     def __init__(self):
         self.api_key = get_env_or_secret("GEMINI_API_KEY")
-        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-pro")
+        self.model = get_env_or_secret("GEMINI_MODEL", "gemini-1.5-flash")
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         if not self.api_key or not isinstance(self.api_key, str) or len(self.api_key.strip()) < 5:
@@ -122,11 +179,10 @@ class GeminiProvider(BaseLLMProvider):
             "x-goog-api-key": clean_key
         }
 
-        # Lista ordenada de modelos a intentar
         endpoints = [
             (f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent", self.model),
-            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", "gemini-1.5-pro"),
             ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent", "gemini-1.5-flash"),
+            ("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", "gemini-1.5-pro"),
             ("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent", "gemini-2.0-flash"),
             ("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", "gemini-1.5-flash")
         ]
@@ -166,10 +222,14 @@ class GeminiProvider(BaseLLMProvider):
         return MockLocalProvider().generate(system_prompt, user_prompt)
 
 def get_llm_provider() -> BaseLLMProvider:
-    provider_type = get_env_or_secret("LLM_PROVIDER", "mock").lower().strip()
-    if provider_type == "openai":
-        return OpenAIProvider()
-    elif provider_type == "gemini":
+    provider_type = get_env_or_secret("LLM_PROVIDER", "").lower().strip()
+    gemini_key = get_env_or_secret("GEMINI_API_KEY")
+    openai_key = get_env_or_secret("OPENAI_API_KEY")
+
+    # Si hay una GEMINI_API_KEY presente, priorizar Gemini
+    if provider_type == "gemini" or (gemini_key and len(gemini_key.strip()) > 5):
         return GeminiProvider()
+    elif provider_type == "openai" or (openai_key and len(openai_key.strip()) > 5):
+        return OpenAIProvider()
     else:
         return MockLocalProvider()
