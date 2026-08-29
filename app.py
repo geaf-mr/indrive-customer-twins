@@ -200,14 +200,14 @@ selected_mode = st.sidebar.radio(
         "🎙️ Modo Focus Group Interactivo",
         "⚔️ Modo Comparación Side-by-Side",
         "💬 Modo Chat Individual",
-        "📑 Fichas de Perfil (Taxonomía BHT)",
+        "📑 Fichas de Perfil Sintético",
         "🔍 Panel de Evidencia Cualitativa"
     ]
 )
 
 st.sidebar.markdown("---")
 provider_name = os.getenv("LLM_PROVIDER", "mock").upper()
-st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos BHT**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
+st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Perfiles Sintéticos**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
 
 DEMO_QUESTIONS = [
     "¿Por qué prefieres proponer y negociar la tarifa manualmente en lugar de una tarifa fija?",
@@ -303,8 +303,8 @@ if selected_mode == "🎙️ Modo Focus Group Interactivo":
 # MODO 2: COMPARACIÓN SIDE-BY-SIDE (3 TWINS)
 # ---------------------------------------------------------
 elif selected_mode == "⚔️ Modo Comparación Side-by-Side":
-    st.subheader("⚔️ Comparación Simultánea Side-by-Side (3 Perfiles BHT)")
-    st.caption("Formula una pregunta y compara en tres columnas cómo respondería cada segmento de la taxonomía BHT de inDrive.")
+    st.subheader("⚔️ Comparación Simultánea Side-by-Side (3 Perfiles)")
+    st.caption("Formula una pregunta y compara en tres columnas cómo respondería cada segmento de perfil.")
 
     comp_preset = st.selectbox("💡 Preguntas de demostración:", ["-- Selecciona o escribe abajo --"] + DEMO_QUESTIONS)
     comp_query = st.text_input("Ingresa tu pregunta:", value=comp_preset if comp_preset != "-- Selecciona o escribe abajo --" else "")
@@ -365,7 +365,7 @@ elif selected_mode == "💬 Modo Chat Individual":
     with st.expander(f"ℹ️ Ver Resumen de Perfil: {profile_info.get('nombre_interno')}"):
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            st.markdown(f"**Segmento BHT**: `{profile_info.get('bht_segment', 'N/A')}`")
+            st.markdown(f"**Segmento Target**: `{profile_info.get('bht_segment', 'N/A')}`")
             st.markdown(f"**Descripción**: {profile_info.get('descripcion_corta', '')}")
         with col_p2:
             st.markdown("**Drivers Principales**:")
@@ -416,8 +416,8 @@ elif selected_mode == "💬 Modo Chat Individual":
 # ---------------------------------------------------------
 # MODO 4: FICHAS DE PERFIL (3 TWINS)
 # ---------------------------------------------------------
-elif selected_mode == "📑 Fichas de Perfil (Taxonomía BHT)":
-    st.subheader("📑 Fichas Estructuradas de Perfiles Sintéticos (BHT Alignment)")
+elif selected_mode == "📑 Fichas de Perfil Sintético":
+    st.subheader("📑 Fichas Estructuradas de Perfiles Sintéticos")
 
     p_tabs = st.tabs([
         "🔵 Twin A: Marcos (Disciplined Hard Work)",
@@ -429,7 +429,7 @@ elif selected_mode == "📑 Fichas de Perfil (Taxonomía BHT)":
         with tab:
             pdata = engine.get_profile(pid)
             st.markdown(f"### {pdata.get('nombre_interno')}")
-            st.markdown(f"**Segmento BHT de inDrive**: `{pdata.get('bht_segment')}`")
+            st.markdown(f"**Segmento Target**: `{pdata.get('bht_segment')}`")
             st.markdown(f"*{pdata.get('descripcion_corta')}*")
 
             st.markdown("---")
