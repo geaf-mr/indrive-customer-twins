@@ -200,14 +200,14 @@ selected_mode = st.sidebar.radio(
         "🎙️ Modo Focus Group Interactivo",
         "⚔️ Modo Comparación Side-by-Side",
         "💬 Modo Chat Individual",
-        "📑 Fichas de Perfil Sintético",
+        "📑 Fichas de perfil",
         "🔍 Panel de Evidencia Cualitativa"
     ]
 )
 
 st.sidebar.markdown("---")
 provider_name = os.getenv("LLM_PROVIDER", "mock").upper()
-st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Perfiles Sintéticos**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
+st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos inDrive**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
 
 DEMO_QUESTIONS = [
     "¿Por qué prefieres proponer y negociar la tarifa manualmente en lugar de una tarifa fija?",
@@ -365,7 +365,7 @@ elif selected_mode == "💬 Modo Chat Individual":
     with st.expander(f"ℹ️ Ver Resumen de Perfil: {profile_info.get('nombre_interno')}"):
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            st.markdown(f"**Segmento Target**: `{profile_info.get('bht_segment', 'N/A')}`")
+            st.markdown(f"**Segmento inDrive**: `{profile_info.get('bht_segment', 'N/A')}`")
             st.markdown(f"**Descripción**: {profile_info.get('descripcion_corta', '')}")
         with col_p2:
             st.markdown("**Drivers Principales**:")
@@ -416,8 +416,8 @@ elif selected_mode == "💬 Modo Chat Individual":
 # ---------------------------------------------------------
 # MODO 4: FICHAS DE PERFIL (3 TWINS)
 # ---------------------------------------------------------
-elif selected_mode == "📑 Fichas de Perfil Sintético":
-    st.subheader("📑 Fichas Estructuradas de Perfiles Sintéticos")
+elif selected_mode == "📑 Fichas de perfil":
+    st.subheader("📑 Fichas de Perfil - Segmentos inDrive")
 
     p_tabs = st.tabs([
         "🔵 Twin A: Marcos (Disciplined Hard Work)",
@@ -429,7 +429,7 @@ elif selected_mode == "📑 Fichas de Perfil Sintético":
         with tab:
             pdata = engine.get_profile(pid)
             st.markdown(f"### {pdata.get('nombre_interno')}")
-            st.markdown(f"**Segmento Target**: `{pdata.get('bht_segment')}`")
+            st.markdown(f"**Segmento inDrive**: `{pdata.get('bht_segment')}`")
             st.markdown(f"*{pdata.get('descripcion_corta')}*")
 
             st.markdown("---")
