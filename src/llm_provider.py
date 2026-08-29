@@ -198,7 +198,11 @@ class GeminiProvider(BaseLLMProvider):
                     ]
                 }
             ],
-            "generationConfig": {"temperature": 0.3}
+            "generationConfig": {
+                "temperature": 0.2,
+                "maxOutputTokens": 650,
+                "topP": 0.85
+            }
         }
 
         last_error = ""
@@ -206,7 +210,7 @@ class GeminiProvider(BaseLLMProvider):
         for base_url, model_label in endpoints:
             url = f"{base_url}?key={clean_key}"
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=20)
+                response = requests.post(url, headers=headers, json=payload, timeout=12)
                 if response.status_code == 200:
                     res_data = response.json()
                     candidates = res_data.get("candidates", [])
