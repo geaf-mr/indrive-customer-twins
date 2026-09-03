@@ -200,6 +200,7 @@ selected_mode = st.sidebar.radio(
     "Selecciona un Modo de Análisis:",
     [
         "🎙️ Modo Focus Group Interactivo",
+        "⚡ Matriz Side-by-Side (Ejecutiva)",
         "⚔️ Modo Comparación Side-by-Side",
         "📊 Cuadros & Matriz Comparativa",
         "💬 Modo Chat Individual",
@@ -317,6 +318,140 @@ if selected_mode == "🎙️ Modo Focus Group Interactivo":
         st.markdown("---")
         st.markdown("### 📝 Síntesis Cualitativa del Moderador (Conclusiones de Producto)")
         st.markdown(res_fg.get("synthesis", ""))
+
+# ---------------------------------------------------------
+# MODO MATRIZ SIDE-BY-SIDE EJECUTIVA (ONE-CLICK + CUSTOM PROMPTS)
+# ---------------------------------------------------------
+elif selected_mode == "⚡ Matriz Side-by-Side (Ejecutiva)":
+    st.subheader("⚡ Matriz Side-by-Side Ejecutiva en Tiempo Real")
+    st.caption("Diseñada para la Presentación a inDrive: Haz clic en las preguntas de dilema estratégico o escribe tu propia consulta para comparar posturas sintetizadas en 3 columnas.")
+
+    # 1. One-Click Prompts disparadores para la demo con inDrive
+    st.markdown("##### 💡 Dilemas Estratégicos de Negocio (Disparadores de 1 Clic):")
+    
+    prompt_col1, prompt_col2, prompt_col3 = st.columns(3)
+    
+    selected_prompt = None
+    
+    with prompt_col1:
+        if st.button("🔥 ¿Yango regala S/ 100 de bono diario?", use_container_width=True):
+            selected_prompt = "¿Cómo reaccionarías si Yango lanza una campaña agresiva regalando S/ 100 diarios por completar 15 carreras en tu zona?"
+        if st.button("🛡️ ¿Filtro obligatorio de DNI a pasajeros?", use_container_width=True):
+            selected_prompt = "[EXPLORATORY SCENARIO] ¿Aceptarías un filtro de seguridad nocturno que requiera foto de DNI del pasajero antes de pedir la moto aunque reduzca 15% los viajes?"
+
+    with prompt_col2:
+        if st.button("💵 ¿Comisión fija mensual vs % por viaje?", use_container_width=True):
+            selected_prompt = "[EXPLORATORY SCENARIO] ¿Cómo reaccionarías si inDrive cobrara una comisión mensual fija en lugar de un porcentaje por viaje?"
+        if st.button("⛰️ ¿Tarifa extra automática por cerros/trocha?", use_container_width=True):
+            selected_prompt = "¿Aceptarías que la app calcule automáticamente un recargo por zonas empinadas o trochas como Collique en lugar de negociarlo manualmente?"
+
+    with prompt_col3:
+        if st.button("⏱️ ¿Asignación directa en horas punta?", use_container_width=True):
+            selected_prompt = "¿Estarías dispuesto a activar asignación directa automática durante horas punta si inDrive garantiza una tarifa mínima de S/ 6.00?"
+        if st.button("🤝 ¿Seguro de salud a cambio de 15% comisión?", use_container_width=True):
+            selected_prompt = "¿Estarías dispuesto a pagar un 15% de comisión si inDrive incluyera un seguro médico de salud y botón de pánico policial?"
+
+    st.markdown("---")
+    
+    # Campo de texto para pregunta propia o cargada mediante botón
+    default_query = selected_prompt if selected_prompt else st.session_state.get("active_matrix_query", "")
+    user_query = st.text_input("✍️ O escribe tu propia pregunta o escenario estratégico:", value=default_query, key="matrix_query_input")
+    
+    if selected_prompt:
+        st.session_state["active_matrix_query"] = selected_prompt
+
+    exec_button = st.button("🚀 Ejecutar Matriz Comparativa", type="primary")
+
+    if exec_button or selected_prompt:
+        query_to_run = selected_prompt if selected_prompt else user_query
+        
+        if not query_to_run:
+            st.warning("Por favor selecciona una pregunta disparadora o escribe una consulta propia.")
+        else:
+            is_exploratory = "[EXPLORATORY SCENARIO]" in query_to_run.upper() or "EXPLORATORIO" in query_to_run.upper()
+            
+            st.markdown(f"### 📋 Matriz Sintética Ejecutiva: *\"{query_to_run}\"*")
+            
+            with st.spinner("Consultando perfiles y sintetizando matriz de posturas..."):
+                res_a = engine.ask("twin_a_autonomo_precavido", query_to_run, is_exploratory=is_exploratory)
+                res_b = engine.ask("twin_b_volumen_bonos", query_to_run, is_exploratory=is_exploratory)
+                res_c = engine.ask("twin_c_oportunista_relajado", query_to_run, is_exploratory=is_exploratory)
+
+            col_a, col_b, col_c = st.columns(3)
+
+            def extract_verdict(resp_text, twin_id):
+                txt_lower = resp_text.lower()
+                if "Marcos" in twin_id or "autonomo" in twin_id:
+                    if "no aceptaría" in txt_lower or "rechaz" in txt_lower or "control" in txt_lower:
+                        return "🔴 RECHAZA / PREFIERE CONTROL Y AUTONOMÍA"
+                    elif "aceptaría" in txt_lower or "de acuerdo" in txt_lower:
+                        return "🟢 ACEPTA / CON BUEN PRECIO"
+                    else:
+                        return "🟡 CONDICIONADO A SEGURIDAD Y TARIFA"
+                elif "Julio" in twin_id or "volumen" in twin_id:
+                    if "bonos" in txt_lower or "volumen" in txt_lower or "acepto" in txt_lower or "ganancia" in txt_lower:
+                        return "🟢 ACEPTA / MOVIDO POR BONOS Y VOLUMEN"
+                    else:
+                        return "🟡 EVALÚA COSTO-BENEFICIO RÁPIDO"
+                else:
+                    if "ritmo" in txt_lower or "tranquilo" in txt_lower or "paso" in txt_lower:
+                        return "🟡 INDIFERENTE / SEGÚN CONVENIENCIA"
+                    else:
+                        return "🔵 ADAPTABLE SIN ESTRÉS"
+
+            with col_a:
+                v_a = extract_verdict(res_a["response"], "twin_a")
+                st.markdown(
+                    f"""
+                    <div style='background-color:#EFF6FF; border:1px solid #BFDBFE; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:#1E40AF;'>🔵 Twin A: Marcos</div>
+                        <div style='font-size:0.82rem; color:#3B82F6; font-weight:600;'>Disciplined Hard Work</div>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#1E3A8A; background-color:#DBEAFE; padding:0.3rem 0.6rem; border-radius:4px;'>
+                            {v_a}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True
+                )
+                st.markdown(res_a["response"])
+                with st.expander("🔎 Evidencia Cualitativa"):
+                    for ev in res_a.get("evidence_used", []):
+                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:110]}...\"*")
+
+            with col_b:
+                v_b = extract_verdict(res_b["response"], "twin_b")
+                st.markdown(
+                    f"""
+                    <div style='background-color:#F0FDF4; border:1px solid #BBF7D0; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:#166534;'>🟢 Twin B: Julio</div>
+                        <div style='font-size:0.82rem; color:#10B981; font-weight:600;'>Tactical Cash Optimizer</div>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#14532D; background-color:#DCFCE7; padding:0.3rem 0.6rem; border-radius:4px;'>
+                            {v_b}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True
+                )
+                st.markdown(res_b["response"])
+                with st.expander("🔎 Evidencia Cualitativa"):
+                    for ev in res_b.get("evidence_used", []):
+                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:110]}...\"*")
+
+            with col_c:
+                v_c = extract_verdict(res_c["response"], "twin_c")
+                st.markdown(
+                    f"""
+                    <div style='background-color:#FFFBEB; border:1px solid #FDE68A; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:#92400E;'>🟡 Twin C: Carlos</div>
+                        <div style='font-size:0.82rem; color:#F59E0B; font-weight:600;'>Low-Pressure Flexibles</div>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#78350F; background-color:#FEF3C7; padding:0.3rem 0.6rem; border-radius:4px;'>
+                            {v_c}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True
+                )
+                st.markdown(res_c["response"])
+                with st.expander("🔎 Evidencia Cualitativa"):
+                    for ev in res_c.get("evidence_used", []):
+                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:110]}...\"*")
 
 # ---------------------------------------------------------
 # MODO 2: COMPARACIÓN SIDE-BY-SIDE (3 TWINS)
