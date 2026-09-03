@@ -1,6 +1,7 @@
 """
 Streamlit MVP Application: Digital Customer Twins (inDrive Qualitative Research).
 Includes 3 BHT Twins & Interactive Focus Group Debate Module.
+Supports Dynamic Theme Switcher: inDrive Electric Dark vs CRIBA Classic Light.
 """
 
 import os
@@ -76,89 +77,6 @@ def check_password():
 if not check_password():
     st.stop()
 
-
-# Custom CSS matching CRIBA Research Branding (Emerald Green & Slate Navy)
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Montserrat', sans-serif;
-    }
-    
-    .stAppViewMain {
-        background-color: #F8FAFC;
-    }
-    
-    .criba-header {
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        padding: 1.2rem 1.8rem;
-        border-radius: 12px;
-        color: white;
-        margin-bottom: 1.5rem;
-        border-left: 6px solid #10B981;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-    }
-    
-    .criba-header h1 {
-        color: #FFFFFF !important;
-        font-size: 1.8rem !important;
-        font-weight: 700 !important;
-        margin: 0 !important;
-    }
-    
-    .criba-header p {
-        color: #94A3B8 !important;
-        font-size: 0.95rem !important;
-        margin-top: 0.3rem !important;
-        margin-bottom: 0 !important;
-    }
-
-    .twin-card-header {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #0F172A;
-        background-color: #F0FDF4;
-        border: 1px solid #A7F3D0;
-        padding: 0.7rem 1.1rem;
-        border-radius: 8px;
-        margin-bottom: 0.8rem;
-    }
-    
-    .stButton>button {
-        background-color: #10B981 !important;
-        color: white !important;
-        font-weight: 600 !important;
-        border-radius: 8px !important;
-        border: none !important;
-        padding: 0.5rem 1.2rem !important;
-        transition: all 0.2s ease !important;
-    }
-    .stButton>button:hover {
-        background-color: #059669 !important;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
-    }
-    
-    .unsupported-badge {
-        background-color: #FEF2F2;
-        color: #991B1B;
-        padding: 0.3rem 0.6rem;
-        border-radius: 4px;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-    
-    .exploratory-badge {
-        background-color: #FFFBEB;
-        color: #B45309;
-        padding: 0.3rem 0.6rem;
-        border-radius: 4px;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 def load_engines():
     return DigitalTwinEngine(), FocusGroupEngine()
 
@@ -177,6 +95,13 @@ st.sidebar.success(f"👤 Sesión: `{user_logged}`")
 if st.sidebar.button("🚪 Cerrar Sesión"):
     st.session_state["authenticated"] = False
     st.rerun()
+
+st.sidebar.markdown("---")
+
+theme_choice = st.sidebar.selectbox(
+    "🎨 Estilo Visual / Theme:",
+    ["inDrive Dark (Electric Lime)", "CRIBA Classic (Emerald Light)"]
+)
 
 st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
@@ -209,6 +134,176 @@ if user_logged.lower() == "admin":
                         st.markdown("**Detalles HTTP de Google:**")
                         for d in diag["details"]:
                             st.caption(f"• {d}")
+
+# Dynamic Theme CSS Application
+if theme_choice == "inDrive Dark (Electric Lime)":
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        html, body, [class*="css"] {
+            font-family: 'Montserrat', sans-serif;
+            color: #F1F5F9;
+        }
+        
+        .stAppViewMain {
+            background-color: #0B0F17 !important;
+        }
+
+        .stSidebar {
+            background-color: #111827 !important;
+        }
+        
+        .criba-header {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #B5FF00;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .criba-header h1 {
+            color: #B5FF00 !important;
+            font-size: 1.8rem !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+        }
+        
+        .criba-header p {
+            color: #CBD5E1 !important;
+            font-size: 0.95rem !important;
+            margin-top: 0.3rem !important;
+            margin-bottom: 0 !important;
+        }
+
+        .twin-card-header {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #F8FAFC;
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            padding: 0.7rem 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+
+        .stButton>button {
+            background-color: #B5FF00 !important;
+            color: #000000 !important;
+            font-weight: 700 !important;
+            border-radius: 8px !important;
+            border: none !important;
+            padding: 0.55rem 1.3rem !important;
+            transition: all 0.2s ease !important;
+        }
+        .stButton>button:hover {
+            background-color: #9CE000 !important;
+            box-shadow: 0 4px 16px rgba(181, 255, 0, 0.4) !important;
+            transform: translateY(-1px);
+        }
+        
+        .unsupported-badge {
+            background-color: #450A0A;
+            color: #FCA5A5;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .exploratory-badge {
+            background-color: #451A03;
+            color: #FDE68A;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        html, body, [class*="css"] {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .stAppViewMain {
+            background-color: #F8FAFC;
+        }
+        
+        .criba-header {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #10B981;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        }
+        
+        .criba-header h1 {
+            color: #FFFFFF !important;
+            font-size: 1.8rem !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+        }
+        
+        .criba-header p {
+            color: #94A3B8 !important;
+            font-size: 0.95rem !important;
+            margin-top: 0.3rem !important;
+            margin-bottom: 0 !important;
+        }
+
+        .twin-card-header {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #0F172A;
+            background-color: #F0FDF4;
+            border: 1px solid #A7F3D0;
+            padding: 0.7rem 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .stButton>button {
+            background-color: #10B981 !important;
+            color: white !important;
+            font-weight: 600 !important;
+            border-radius: 8px !important;
+            border: none !important;
+            padding: 0.5rem 1.2rem !important;
+            transition: all 0.2s ease !important;
+        }
+        .stButton>button:hover {
+            background-color: #059669 !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+        }
+        
+        .unsupported-badge {
+            background-color: #FEF2F2;
+            color: #991B1B;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .exploratory-badge {
+            background-color: #FFFBEB;
+            color: #B45309;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
 DEMO_QUESTIONS = [
     "¿Por qué prefieres proponer y negociar la tarifa manualmente en lugar de una tarifa fija?",
@@ -587,10 +682,10 @@ elif selected_mode == "⚡ Matriz Side-by-Side":
                 v_a = extract_verdict(res_a["response"], "twin_a")
                 st.markdown(
                     f"""
-                    <div style='background-color:#EFF6FF; border:1px solid #BFDBFE; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
-                        <div style='font-size:1.05rem; font-weight:700; color:#1E40AF;'>🔵 Twin A: Marcos</div>
+                    <div style='background-color:{'#1E293B' if theme_choice.startswith('inDrive') else '#EFF6FF'}; border:1px solid {'#3B82F6' if theme_choice.startswith('inDrive') else '#BFDBFE'}; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:{'#93C5FD' if theme_choice.startswith('inDrive') else '#1E40AF'};'>🔵 Twin A: Marcos</div>
                         <div style='font-size:0.82rem; color:#3B82F6; font-weight:600;'>Disciplined Hard Work</div>
-                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#1E3A8A; background-color:#DBEAFE; padding:0.3rem 0.6rem; border-radius:4px;'>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:{'#EFF6FF' if theme_choice.startswith('inDrive') else '#1E3A8A'}; background-color:{'#1E3A8A' if theme_choice.startswith('inDrive') else '#DBEAFE'}; padding:0.3rem 0.6rem; border-radius:4px;'>
                             {v_a}
                         </div>
                     </div>
@@ -605,10 +700,10 @@ elif selected_mode == "⚡ Matriz Side-by-Side":
                 v_b = extract_verdict(res_b["response"], "twin_b")
                 st.markdown(
                     f"""
-                    <div style='background-color:#F0FDF4; border:1px solid #BBF7D0; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
-                        <div style='font-size:1.05rem; font-weight:700; color:#166534;'>🟢 Twin B: Julio</div>
+                    <div style='background-color:{'#064E3B' if theme_choice.startswith('inDrive') else '#F0FDF4'}; border:1px solid {'#10B981' if theme_choice.startswith('inDrive') else '#BBF7D0'}; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:{'#A7F3D0' if theme_choice.startswith('inDrive') else '#166534'};'>🟢 Twin B: Julio</div>
                         <div style='font-size:0.82rem; color:#10B981; font-weight:600;'>Tactical Cash Optimizer</div>
-                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#14532D; background-color:#DCFCE7; padding:0.3rem 0.6rem; border-radius:4px;'>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:{'#ECFDF5' if theme_choice.startswith('inDrive') else '#14532D'}; background-color:{'#047857' if theme_choice.startswith('inDrive') else '#DCFCE7'}; padding:0.3rem 0.6rem; border-radius:4px;'>
                             {v_b}
                         </div>
                     </div>
@@ -623,10 +718,10 @@ elif selected_mode == "⚡ Matriz Side-by-Side":
                 v_c = extract_verdict(res_c["response"], "twin_c")
                 st.markdown(
                     f"""
-                    <div style='background-color:#FFFBEB; border:1px solid #FDE68A; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
-                        <div style='font-size:1.05rem; font-weight:700; color:#92400E;'>🟡 Twin C: Carlos</div>
+                    <div style='background-color:{'#78350F' if theme_choice.startswith('inDrive') else '#FFFBEB'}; border:1px solid {'#F59E0B' if theme_choice.startswith('inDrive') else '#FDE68A'}; padding:0.8rem; border-radius:8px; margin-bottom:0.8rem;'>
+                        <div style='font-size:1.05rem; font-weight:700; color:{'#FDE68A' if theme_choice.startswith('inDrive') else '#92400E'};'>🟡 Twin C: Carlos</div>
                         <div style='font-size:0.82rem; color:#F59E0B; font-weight:600;'>Low-Pressure Flexibles</div>
-                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:#78350F; background-color:#FEF3C7; padding:0.3rem 0.6rem; border-radius:4px;'>
+                        <div style='margin-top:0.4rem; font-size:0.85rem; font-weight:700; color:{'#FEF3C7' if theme_choice.startswith('inDrive') else '#78350F'}; background-color:{'#B45309' if theme_choice.startswith('inDrive') else '#FEF3C7'}; padding:0.3rem 0.6rem; border-radius:4px;'>
                             {v_c}
                         </div>
                     </div>
@@ -681,9 +776,9 @@ elif selected_mode == "🎙️ Modo Focus Group Interactivo":
                 color_border = "#3B82F6" if "Marcos" in speaker else ("#10B981" if "Julio" in speaker else "#F59E0B")
                 st.markdown(
                     f"""
-                    <div style='background-color:#FFFFFF; border-left:4px solid {color_border}; padding:0.8rem 1rem; border-radius:6px; margin-bottom:0.8rem; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
-                        <div style='font-size:0.85rem; color:#64748B; font-weight:600;'>Ronda {r_idx} | {speaker}</div>
-                        <div style='font-size:0.98rem; color:#1E293B; margin-top:0.3rem;'>{text}</div>
+                    <div style='background-color:{'#1E293B' if theme_choice.startswith('inDrive') else '#FFFFFF'}; border-left:4px solid {color_border}; padding:0.8rem 1rem; border-radius:6px; margin-bottom:0.8rem; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
+                        <div style='font-size:0.85rem; color:{'#94A3B8' if theme_choice.startswith('inDrive') else '#64748B'}; font-weight:600;'>Ronda {r_idx} | {speaker}</div>
+                        <div style='font-size:0.98rem; color:{'#F8FAFC' if theme_choice.startswith('inDrive') else '#1E293B'}; margin-top:0.3rem;'>{text}</div>
                     </div>
                     """,
                     unsafe_allow_html=True
