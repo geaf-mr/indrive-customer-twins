@@ -97,13 +97,6 @@ if st.sidebar.button("🚪 Cerrar Sesión"):
     st.rerun()
 
 st.sidebar.markdown("---")
-
-theme_choice = st.sidebar.selectbox(
-    "🎨 Estilo Visual / Theme:",
-    ["inDrive Dark (Electric Lime)", "CRIBA Classic (Emerald Light)"]
-)
-
-st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
     "Selecciona un Modo de Análisis:",
     [
@@ -134,6 +127,26 @@ if user_logged.lower() == "admin":
                         st.markdown("**Detalles HTTP de Google:**")
                         for d in diag["details"]:
                             st.caption(f"• {d}")
+
+# Theme Selector buttons at the very bottom of sidebar
+if "current_theme" not in st.session_state:
+    st.session_state["current_theme"] = "inDrive Dark (Electric Lime)"
+
+st.sidebar.markdown("---")
+st.sidebar.caption("🎨 Estilo Visual:")
+t_col1, t_col2 = st.sidebar.columns(2)
+
+with t_col1:
+    if st.button("🟢 inDrive Dark", key="btn_theme_dark", use_container_width=True):
+        st.session_state["current_theme"] = "inDrive Dark (Electric Lime)"
+        st.rerun()
+
+with t_col2:
+    if st.button("🌿 CRIBA Light", key="btn_theme_light", use_container_width=True):
+        st.session_state["current_theme"] = "CRIBA Classic (Emerald Light)"
+        st.rerun()
+
+theme_choice = st.session_state["current_theme"]
 
 # Dynamic Theme CSS Application
 if theme_choice == "inDrive Dark (Electric Lime)":
@@ -810,4 +823,4 @@ elif selected_mode == "🔍 Panel de Evidencia Cualitativa":
                 st.markdown(f"**Entrevistados**: `{', '.join(item['entrevistados'])}`")
                 st.markdown(f"**Interpretación**: {item['interpretacion']}")
                 for ev in item["evidencia"]:
-                    st.markdown(f"- **[{ev['transcript_id']}] {ev['interviewee_label']}**: *\"{ev['evidencia_textual']}\"*")
+                    st.markdown(f"- **[{ev['transcript_id']}] {ev['evidencia_textual']}\"*")
