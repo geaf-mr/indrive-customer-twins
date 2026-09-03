@@ -517,18 +517,24 @@ elif selected_mode == "⚡ Matriz Side-by-Side":
             selected_prompt = "¿Cómo reaccionarías si Yango lanza una campaña agresiva regalando S/ 100 diarios por completar 15 carreras en tu zona?"
         if st.button("🛡️ ¿Filtro obligatorio de DNI a pasajeros?", use_container_width=True):
             selected_prompt = "[EXPLORATORY SCENARIO] ¿Aceptarías un filtro de seguridad nocturno que requiera foto de DNI del pasajero antes de pedir la moto aunque reduzca 15% los viajes?"
+        if st.button("💳 ¿QR Yape/Plin en app sin dar celular?", use_container_width=True):
+            selected_prompt = "¿Te ayudaría que inDrive integre un QR de cobro digital (Yape/Plin) en la pantalla para evitar dictarle tu número de celular personal al pasajero?"
 
     with prompt_col2:
         if st.button("💵 ¿Comisión fija mensual vs % por viaje?", use_container_width=True):
             selected_prompt = "[EXPLORATORY SCENARIO] ¿Cómo reaccionarías si inDrive cobrara una comisión mensual fija en lugar de un porcentaje por viaje?"
         if st.button("⛰️ ¿Tarifa extra automática por cerros/trocha?", use_container_width=True):
             selected_prompt = "¿Aceptarías que la app calcule automáticamente un recargo por zonas empinadas o trochas como Collique en lugar de negociarlo manualmente?"
+        if st.button("🔧 ¿Descuento repuestos Bajaj o súper?", use_container_width=True):
+            selected_prompt = "¿Qué programa de lealtad te motivaría más a usar inDrive: descuentos en gasocentros y mantenimiento de mototaxi (Bajaj/TVS) o vales de supermercado/cine para tu familia?"
 
     with prompt_col3:
         if st.button("⏱️ ¿Asignación directa en horas punta?", use_container_width=True):
             selected_prompt = "¿Estarías dispuesto a activar asignación directa automática durante horas punta si inDrive garantiza una tarifa mínima de S/ 6.00?"
         if st.button("🤝 ¿Seguro de salud a cambio de 15% comisión?", use_container_width=True):
             selected_prompt = "¿Estarías dispuesto a pagar un 15% de comisión si inDrive incluyera un seguro médico de salud y botón de pánico policial?"
+        if st.button("🏦 ¿Microcréditos in-app para llantas/SOAT?", use_container_width=True):
+            selected_prompt = "¿Aceptarías un microcrédito pre-aprobado dentro de la app para comprar llantas o renovar tu SOAT/AFOCAT si se descuenta automáticamente con un pequeño monto por viaje?"
 
     st.markdown("---")
     
