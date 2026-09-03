@@ -27,7 +27,6 @@ st.set_page_config(
 def check_password():
     """Retorna True si el usuario ha iniciado sesión con credenciales válidas."""
     def password_entered():
-        # Obtener contraseñas válidas desde secrets o valores por defecto
         valid_passwords = st.secrets.get("passwords", {
             "admin": "Criba2026*",
             "indrive": "InDrivePiloto2026",
@@ -37,7 +36,6 @@ def check_password():
         user = st.session_state.get("login_username", "").strip()
         passwd = st.session_state.get("login_password", "").strip()
         
-        # Permitir matching de usuario sensible o insensible a mayúsculas
         matched_user = next((k for k in valid_passwords if k.lower() == user.lower()), None)
         
         if matched_user and valid_passwords[matched_user] == passwd:
@@ -51,7 +49,6 @@ def check_password():
     if st.session_state.get("authenticated", False):
         return True
 
-    # Renderizar pantalla de login con branding de CRIBA Research
     st.markdown("""
     <div style="max-width: 440px; margin: 4rem auto 1.5rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-top: 5px solid #10B981; text-align: center;">
         <img src="https://cribaresearch.com/wp-content/uploads/2024/07/cropped-FAVICON-Verde@300x-192x192.png" width="64" style="margin-bottom: 0.8rem;">
@@ -89,7 +86,6 @@ st.markdown("""
         font-family: 'Montserrat', sans-serif;
     }
     
-    /* Header Brand Styling */
     .stAppViewMain {
         background-color: #F8FAFC;
     }
@@ -129,19 +125,6 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
     
-    .fg-speaker-card {
-        background-color: #FFFFFF;
-        border-left: 4px solid #10B981;
-        padding: 0.9rem 1.1rem;
-        border-radius: 8px;
-        margin-bottom: 0.9rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-        border-top: 1px solid #F1F5F9;
-        border-right: 1px solid #F1F5F9;
-        border-bottom: 1px solid #F1F5F9;
-    }
-    
-    /* Primary buttons in CRIBA Emerald */
     .stButton>button {
         background-color: #10B981 !important;
         color: white !important;
@@ -199,19 +182,17 @@ st.sidebar.markdown("---")
 selected_mode = st.sidebar.radio(
     "Selecciona un Modo de Análisis:",
     [
-        "🎙️ Modo Focus Group Interactivo",
-        "⚡ Matriz Side-by-Side (Ejecutiva)",
-        "⚔️ Modo Comparación Side-by-Side",
-        "📊 Cuadros & Matriz Comparativa",
+        "📊 Cuadros y Matriz",
         "💬 Modo Chat Individual",
-        "📑 Fichas de perfil",
+        "⚡ Matriz Side-by-Side",
+        "🎙️ Modo Focus Group Interactivo",
         "🔍 Panel de Evidencia Cualitativa"
     ]
 )
 
 st.sidebar.markdown("---")
 provider_name = os.getenv("LLM_PROVIDER", "mock").upper()
-st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos inDrive**: 3 Twins\n\n*(Evidencia: 25 entrevistas anonimizadas)*")
+st.sidebar.info(f"**Motor LLM**: `{provider_name}`\n\n**Segmentos inDrive**: 3 Twins\n\n*(Evidencia: 25 entrevistas + PDF 58 pág.)*")
 
 if user_logged.lower() == "admin":
     with st.sidebar.expander("🔧 Diagnóstico Conexión Gemini (Admin)"):
@@ -253,84 +234,282 @@ FOCUS_GROUP_TOPICS = [
 st.markdown("""
 <div class="criba-header">
     <h1>CRIBA Research • Digital Customer Twins</h1>
-    <p>Motor de Investigación Cualitativa con IA derivado de 25 entrevistas en profundidad | Estudio inDrive & Categoría Mototaxis / Taxis</p>
+    <p>Motor de Investigación Cualitativa con IA derivado de 25 entrevistas en profundidad + Informe General PDF (58 pág) | Estudio inDrive Mototaxis</p>
 </div>
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# MODO 1: FOCUS GROUP INTERACTIVO (NUEVO)
+# MODO 1: CUADROS Y MATRIZ (CON FICHAS INTEGRADAS)
 # ---------------------------------------------------------
-if selected_mode == "🎙️ Modo Focus Group Interactivo":
-    st.subheader("🎙️ Simulación de Focus Group Cualitativo en Tiempo Real")
-    st.caption("Plateale una problemática de producto o propuesta estratégica a los Digital Customer Twins y observa cómo conversan, debaten y responden directamente a sus argumentos.")
+if selected_mode == "📊 Cuadros y Matriz":
+    st.subheader("📊 Cuadros Sintéticos, Fichas de Perfil & Matriz Comparativa")
+    st.caption("Resumen estructurado en tablas e indicadores derivados del informe completo (58 páginas PDF) y las 25 entrevistas en profundidad.")
 
-    c1, c2 = st.columns([3, 1])
-    with c1:
-        preset_fg = st.selectbox("💡 Selecciona una problemática clave del Brief de inDrive:", FOCUS_GROUP_TOPICS)
-        topic_input = st.text_input("O ingresa un tema de debate personalizado:", value=preset_fg)
-    with c2:
-        num_rounds = st.slider("Rondas de debate:", min_value=1, max_value=4, value=2)
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric("Entrevistas Cualitativas", "25 IDIs", "Lima Norte & Sur")
+    with m2:
+        st.metric("Informe General PDF", "58 Páginas", "Agosto 2026")
+    with m3:
+        st.metric("Economía de Ticket", "S/ 3.50 - 8.00", "Micro-ticket L5")
+    with m4:
+        st.metric("Marcas Evaluadas", "3 Apps", "inDrive, Yango, Uber")
 
-    st.markdown("##### Participantes del Focus Group:")
-    col_t1, col_t2, col_t3 = st.columns(3)
-    with col_t1:
-        st.checkbox("🔵 Marcos (Disciplined Hard Work)", value=True, disabled=True)
-    with col_t2:
-        st.checkbox("🟢 Julio (Tactical Cash Optimizer)", value=True, disabled=True)
-    with col_t3:
-        st.checkbox("🟡 Carlos (Low-Pressure Flexibles)", value=True, disabled=True)
+    st.markdown("---")
 
-    selected_twins = ["twin_a_autonomo_precavido", "twin_b_volumen_bonos", "twin_c_oportunista_relajado"]
+    tab_c1, tab_c2, tab_c3, tab_c4 = st.tabs([
+        "📋 Cuadro Comparativo por Segmentos",
+        "👤 Fichas de Perfil Detalladas",
+        "⚔️ Matriz Competitiva de Apps",
+        "💡 Resumen Ejecutivo & Oportunidades"
+    ])
 
-    if st.button("🚀 Iniciar Sesión de Focus Group", type="primary"):
-        with st.spinner("Convocando a los Digital Twins y ejecutando el debate multi-agente..."):
-            res_fg = fg_engine.run_focus_group(topic_input, selected_twins, num_rounds=num_rounds)
+    with tab_c1:
+        st.markdown("### 📋 Cuadro Comparativo Integrado por Segmentos de Conductor")
+        st.caption("Matriz sintética que contrasta las 7 dimensiones estratégicas clave entre los perfiles de conductores Tuk Tuk / Mototaxi.")
 
-        st.markdown("---")
-        st.markdown(f"### 💬 Transcripción del Debate en Vivo: *\"{topic_input}\"*")
+        segment_data = {
+            "Dimensión Estratégica": [
+                "1. Modelo Tarifario Preferido",
+                "2. Principal Motivador / Driver",
+                "3. Mayor Fricción Operativa",
+                "4. Actitud ante Tarifa Fija",
+                "5. Sensibilidad a Bonos y Cuotas",
+                "6. Comportamiento en Zonas Riesgosas",
+                "7. Relación y Lealtad con inDrive"
+            ],
+            "Marcos (Autónomo y Precavido)": [
+                "Negociación manual abierta ('Fair Fare')",
+                "Control total del destino, precio y autonomía",
+                "Temor a carreras a cerros peligrosos (Collique/Añashuayco)",
+                "Rechazo rotundo; exige ver destino antes de ofertar",
+                "Baja; prefiere asegurar margen por viaje sin presiones",
+                "Filtra severamente destinos; eleva tarifa si hay trocha",
+                "Alta preferencia por el modelo de contraoferta de inDrive"
+            ],
+            "Julio (Volumen y Bonos)": [
+                "Asignación automática directa (Modelo Yango)",
+                "Maximización del ingreso diario por volumen de viajes",
+                "Pérdida de tiempo ofertando y esperando confirmación",
+                "Aceptación alta si viene respaldada por bonos",
+                "Alta; se mueve 100% por metas y garantizados en soles",
+                "Acepta riesgos si la cuota del día lo exige",
+                "Usa inDrive como respaldo; migra a Yango por incentivos"
+            ],
+            "Carlos (Oportunista Relajado)": [
+                "Híbrido (App + Paradero tradicional)",
+                "Ingreso complementario sin horario fijo ni estrés",
+                "Comisiones altas o sistemas complejos de scoring",
+                "Indiferente; acepta si la tarifa cubre la distancia",
+                "Media-Baja; no trabaja suficientes horas para metas",
+                "Evita zonas de alto riesgo; prefiere rutas tranquilas",
+                "Usa inDrive de forma esporádica cuando le conviene"
+            ]
+        }
+        df_segmentos = pd.DataFrame(segment_data)
 
-        for turn in res_fg.get("transcript", []):
-            role = turn.get("role")
-            speaker = turn.get("speaker")
-            text = turn.get("text")
-            r_idx = turn.get("round", 0)
+        st.dataframe(
+            df_segmentos,
+            use_container_width=True,
+            hide_index=True
+        )
 
-            if role == "moderator":
-                st.info(f"🎙️ **{speaker}**: {text}")
-            else:
-                color_border = "#3B82F6" if "Marcos" in speaker else ("#10B981" if "Julio" in speaker else "#F59E0B")
-                st.markdown(
-                    f"""
-                    <div style='background-color:#FFFFFF; border-left:4px solid {color_border}; padding:0.8rem 1rem; border-radius:6px; margin-bottom:0.8rem; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
-                        <div style='font-size:0.85rem; color:#64748B; font-weight:600;'>Ronda {r_idx} | {speaker}</div>
-                        <div style='font-size:0.98rem; color:#1E293B; margin-top:0.3rem;'>{text}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                if turn.get("evidence"):
-                    with st.expander(f"🔎 Ver Evidencia Cualitativa detras de la intervención de {speaker}"):
-                        for ev in turn["evidence"]:
-                            st.markdown(f"**Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
-                            st.markdown(f"> *\"{ev['text_snippet']}\"*")
-                            st.caption(f"Interpretación: {ev['interpretacion']}")
+        csv_data = df_segmentos.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Descargar Cuadro Comparativo en CSV (Excel)",
+            data=csv_data,
+            file_name="cuadro_comparativo_segmentos_indrive.csv",
+            mime="text/csv"
+        )
 
-        st.markdown("---")
-        st.markdown("### 📝 Síntesis Cualitativa del Moderador (Conclusiones de Producto)")
-        st.markdown(res_fg.get("synthesis", ""))
+    with tab_c2:
+        st.markdown("### 👤 Fichas de Perfil - Segmentos inDrive")
+
+        p_tabs = st.tabs([
+            "🔵 Twin A: Marcos (Disciplined Hard Work)",
+            "🟢 Twin B: Julio (Tactical Cash Optimizer)",
+            "🟡 Twin C: Carlos (Low-Pressure Flexibles)"
+        ])
+
+        for tab, pid in zip(p_tabs, ["twin_a_autonomo_precavido", "twin_b_volumen_bonos", "twin_c_oportunista_relajado"]):
+            with tab:
+                pdata = engine.get_profile(pid)
+                st.markdown(f"### {pdata.get('nombre_interno')}")
+                st.markdown(f"**Segmento inDrive**: `{pdata.get('bht_segment')}`")
+                st.markdown(f"*{pdata.get('descripcion_corta')}*")
+
+                st.markdown("---")
+                c1, c2, c3 = st.columns(3)
+
+                with c1:
+                    st.markdown("#### 🟢 EVIDENCE (Del Corpus)")
+                    st.markdown("**Necesidades Centrales**:")
+                    for item in pdata.get("EVIDENCE", {}).get("necesidades", []):
+                        st.markdown(f"- {item}")
+                    st.markdown("**Drivers Principales**:")
+                    for item in pdata.get("EVIDENCE", {}).get("drivers", []):
+                        st.markdown(f"- {item}")
+                    st.markdown("**Fricciones Críticas**:")
+                    for item in pdata.get("EVIDENCE", {}).get("fricciones", []):
+                        st.markdown(f"- {item}")
+
+                with c2:
+                    st.markdown("#### 🔵 INTERPRETATION (Síntesis Analítica)")
+                    st.info(pdata.get("INTERPRETATION", {}).get("perfil_analitico", ""))
+                    st.markdown("**Tensiones Internas**:")
+                    st.write(pdata.get("INTERPRETATION", {}).get("tensiones_internas", ""))
+                    st.markdown("**Lenguaje Característico**:")
+                    for lang in pdata.get("lenguaje_caracteristico", []):
+                        st.markdown(f"- *\"{lang}\"*")
+
+                with c3:
+                    st.markdown("#### 🔴 UNKNOWN (Sin Evidencia Suficiente)")
+                    st.warning("Temas sin evidencia suficiente en el estudio:")
+                    for unk in pdata.get("UNKNOWN", {}).get("temas_sin_evidencia", []):
+                        st.markdown(f"- ❌ {unk}")
+
+                st.markdown("---")
+                st.markdown(f"**Fuentes / Transcripts Sustentantes**: `{', '.join(pdata.get('fuentes_evidencia', {}).get('transcripts', []))}`")
+
+    with tab_c3:
+        st.markdown("### ⚔️ Matriz Competitiva de Plataformas (inDrive vs Yango vs Uber)")
+        st.caption("Comparativo de posicionamiento de marca extraído del capítulo 05 del informe de investigación (Páginas 26-53 del PDF).")
+
+        brand_data = {
+            "Atributo / Dimensión": [
+                "Posicionamiento percibido",
+                "Mecanismo de captura",
+                "Estructura de ganancias",
+                "Fortaleza principal",
+                "Barrera / Fricción mayor",
+                "Nivel de adopción en mototaxis"
+            ],
+            "inDrive (Fair Fare)": [
+                "Autonomía y precio justo",
+                "Negociación bidireccional de tarifa",
+                "Comisión porcentual por viaje",
+                "Conductor elige ruta, precio y pasajero",
+                "Poca densidad en zonas periféricas lejanas",
+                "Líder en reputación y equidad de marca"
+            ],
+            "Yango (Volume Leader)": [
+                "Rapidez y bonos de volumen",
+                "Asignación automática directa",
+                "Bonos por cumplimiento de cuotas diarias",
+                "Alta liquidez y flujo continuo de pedidos",
+                "Sensación de pérdida de control en tarifa",
+                "Crecimiento agresivo impulsado por incentivos"
+            ],
+            "Uber (Auto-Centric)": [
+                "Seguridad y marca corporativa",
+                "Algoritmo de asignación dinámica",
+                "Tarifa calculada por tiempo y distancia",
+                "Reconocimiento de marca masivo en autos",
+                "Interfaz no optimizada para mototaxis (L5)",
+                "Uso secundario y limitado en el segmento Tuk Tuk"
+            ]
+        }
+        df_brands = pd.DataFrame(brand_data)
+        st.dataframe(df_brands, use_container_width=True, hide_index=True)
+
+    with tab_c4:
+        st.markdown("### 💡 Hallazgos Clave & Oportunidades del Informe PDF (Agosto 2026)")
+        
+        col_h1, col_h2 = st.columns(2)
+        with col_h1:
+            st.info("""
+            **📌 Realidad del Mercado L5 (Pág. 3-4 del PDF):**
+            - **Economía de Micro-ticket**: Las carreras oscilan entre **S/ 3.50 y S/ 8.00**.
+            - **Rutina Híbrida**: El conductor alterna el recojo en calle (*Street pick-up*) con el encendido de la app.
+            - **Boca a Boca & WhatsApp**: La adopción se propaga mostrando capturas de pantalla de ganancias diarias en grupos de mecánica.
+            """)
+        with col_h2:
+            st.success("""
+            **🎯 Oportunidad de Crecimiento inDrive:**
+            - **Desbloquear la UX**: Adaptar la interfaz para operaciones rápidas en mototaxis (L5) sin requerir clicks complejos.
+            - **Push de Pasajeros**: Aumentar la densidad de pedidos en distritos periféricos (Comas, Carabayllo, S.J.L.).
+            - **Incentivos Transparentes**: Crear esquemas de fidelización que mantengan el modelo "Fair Fare" sin forzar la asignación a ciegas.
+            """)
 
 # ---------------------------------------------------------
-# MODO MATRIZ SIDE-BY-SIDE EJECUTIVA (ONE-CLICK + CUSTOM PROMPTS)
+# MODO 2: CHAT INDIVIDUAL
 # ---------------------------------------------------------
-elif selected_mode == "⚡ Matriz Side-by-Side (Ejecutiva)":
+elif selected_mode == "💬 Modo Chat Individual":
+    st.subheader("💬 Interacción Individual con un Digital Customer Twin")
+
+    twin_choice = st.selectbox(
+        "Selecciona el Digital Customer Twin:",
+        [
+            ("twin_a_autonomo_precavido", "Marcos - Disciplined Hard Work (Autónomo y Precavido)"),
+            ("twin_b_volumen_bonos", "Julio - Tactical Cash Optimizer (Volumen y Bonos)"),
+            ("twin_c_oportunista_relajado", "Carlos - Low-Pressure Flexibles (Oportunista y Relajado)")
+        ],
+        format_func=lambda x: x[1]
+    )
+    twin_id = twin_choice[0]
+    profile_info = engine.get_profile(twin_id)
+
+    with st.expander(f"ℹ️ Ver Resumen de Perfil: {profile_info.get('nombre_interno')}"):
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.markdown(f"**Segmento inDrive**: `{profile_info.get('bht_segment', 'N/A')}`")
+            st.markdown(f"**Descripción**: {profile_info.get('descripcion_corta', '')}")
+        with col_p2:
+            st.markdown("**Drivers Principales**:")
+            for d in profile_info.get('EVIDENCE', {}).get('drivers', []):
+                st.markdown(f"- {d}")
+
+    history_key = f"chat_history_{twin_id}"
+    if history_key not in st.session_state:
+        st.session_state[history_key] = []
+
+    user_query = st.chat_input("Escribe tu pregunta para este perfil...")
+
+    for msg in st.session_state[history_key]:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+            if msg.get("evidence"):
+                with st.expander("🔎 Evidencia Cualitativa"):
+                    for ev in msg["evidence"]:
+                        st.markdown(f"**Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
+                        st.markdown(f"> *\"{ev['text_snippet']}\"*")
+
+    if user_query:
+        with st.chat_message("user"):
+            st.markdown(user_query)
+
+        is_exploratory = "[EXPLORATORY SCENARIO]" in user_query.upper()
+        with st.spinner("Consultando corpus..."):
+            result = engine.ask(twin_id, user_query, is_exploratory=is_exploratory)
+
+        with st.chat_message("assistant"):
+            if result.get("is_unsupported"):
+                st.markdown("<span class='unsupported-badge'>⚠️ SIN EVIDENCIA SUFICIENTE EN CORPUS</span>", unsafe_allow_html=True)
+            elif result.get("is_exploratory"):
+                st.markdown("<span class='exploratory-badge'>🧪 ESCENARIO EXPLORATORIO HIPOTÉTICO</span>", unsafe_allow_html=True)
+
+            st.markdown(result["response"])
+
+            if result.get("evidence_used"):
+                with st.expander("🔎 Ver Evidencia Cualitativa Detrás de esta Respuesta"):
+                    for ev in result["evidence_used"]:
+                        st.markdown(f"**Transcripción Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
+                        st.markdown(f"> *\"{ev['text_snippet']}\"*")
+                        st.caption(f"Interpretación: {ev['interpretacion']}")
+
+        st.session_state[history_key].append({"role": "user", "content": user_query})
+        st.session_state[history_key].append({"role": "assistant", "content": result["response"], "evidence": result.get("evidence_used", [])})
+
+# ---------------------------------------------------------
+# MODO 3: MATRIZ SIDE-BY-SIDE (EJECUTIVA + CLÁSICA)
+# ---------------------------------------------------------
+elif selected_mode == "⚡ Matriz Side-by-Side":
     st.subheader("⚡ Matriz Side-by-Side Ejecutiva en Tiempo Real")
     st.caption("Diseñada para la Presentación a inDrive: Haz clic en las preguntas de dilema estratégico o escribe tu propia consulta para comparar posturas sintetizadas en 3 columnas.")
 
-    # 1. One-Click Prompts disparadores para la demo con inDrive
     st.markdown("##### 💡 Dilemas Estratégicos de Negocio (Disparadores de 1 Clic):")
     
     prompt_col1, prompt_col2, prompt_col3 = st.columns(3)
-    
     selected_prompt = None
     
     with prompt_col1:
@@ -353,7 +532,6 @@ elif selected_mode == "⚡ Matriz Side-by-Side (Ejecutiva)":
 
     st.markdown("---")
     
-    # Campo de texto para pregunta propia o cargada mediante botón
     default_query = selected_prompt if selected_prompt else st.session_state.get("active_matrix_query", "")
     user_query = st.text_input("✍️ O escribe tu propia pregunta o escenario estratégico:", value=default_query, key="matrix_query_input")
     
@@ -454,318 +632,69 @@ elif selected_mode == "⚡ Matriz Side-by-Side (Ejecutiva)":
                         st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:110]}...\"*")
 
 # ---------------------------------------------------------
-# MODO 2: COMPARACIÓN SIDE-BY-SIDE (3 TWINS)
+# MODO 4: FOCUS GROUP INTERACTIVO
 # ---------------------------------------------------------
-elif selected_mode == "⚔️ Modo Comparación Side-by-Side":
-    st.subheader("⚔️ Comparación Simultánea Side-by-Side (3 Perfiles)")
-    st.caption("Formula una pregunta y compara en tres columnas cómo respondería cada segmento de perfil.")
+elif selected_mode == "🎙️ Modo Focus Group Interactivo":
+    st.subheader("🎙️ Simulación de Focus Group Cualitativo en Tiempo Real")
+    st.caption("Plateale una problemática de producto o propuesta estratégica a los Digital Customer Twins y observa cómo conversan, debaten y responden directamente a sus argumentos.")
 
-    comp_preset = st.selectbox("💡 Preguntas de demostración:", ["-- Selecciona o escribe abajo --"] + DEMO_QUESTIONS)
-    comp_query = st.text_input("Ingresa tu pregunta:", value=comp_preset if comp_preset != "-- Selecciona o escribe abajo --" else "")
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        preset_fg = st.selectbox("💡 Selecciona una problemática clave del Brief de inDrive:", FOCUS_GROUP_TOPICS)
+        topic_input = st.text_input("O ingresa un tema de debate personalizado:", value=preset_fg)
+    with c2:
+        num_rounds = st.slider("Rondas de debate:", min_value=1, max_value=4, value=2)
 
-    if st.button("🚀 Comparar 3 Perfiles", type="primary"):
-        if not comp_query:
-            st.warning("Por favor ingresa una pregunta.")
-        else:
-            is_exploratory = "[EXPLORATORY SCENARIO]" in comp_query.upper()
+    st.markdown("##### Participantes del Focus Group:")
+    col_t1, col_t2, col_t3 = st.columns(3)
+    with col_t1:
+        st.checkbox("🔵 Marcos (Disciplined Hard Work)", value=True, disabled=True)
+    with col_t2:
+        st.checkbox("🟢 Julio (Tactical Cash Optimizer)", value=True, disabled=True)
+    with col_t3:
+        st.checkbox("🟡 Carlos (Low-Pressure Flexibles)", value=True, disabled=True)
 
-            col_a, col_b, col_c = st.columns(3)
+    selected_twins = ["twin_a_autonomo_precavido", "twin_b_volumen_bonos", "twin_c_oportunista_relajado"]
 
-            with col_a:
-                st.markdown("<div class='twin-card-header'>🔵 Twin A: Marcos<br><small>Disciplined Hard Work</small></div>", unsafe_allow_html=True)
-                with st.spinner("Generando..."):
-                    res_a = engine.ask("twin_a_autonomo_precavido", comp_query, is_exploratory=is_exploratory)
-                st.write(res_a["response"])
-                with st.expander("🔎 Evidencia Twin A"):
-                    for ev in res_a.get("evidence_used", []):
-                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:120]}...\"*")
+    if st.button("🚀 Iniciar Sesión de Focus Group", type="primary"):
+        with st.spinner("Convocando a los Digital Twins y ejecutando el debate multi-agente..."):
+            res_fg = fg_engine.run_focus_group(topic_input, selected_twins, num_rounds=num_rounds)
 
-            with col_b:
-                st.markdown("<div class='twin-card-header'>🟢 Twin B: Julio<br><small>Tactical Cash Optimizer</small></div>", unsafe_allow_html=True)
-                with st.spinner("Generando..."):
-                    res_b = engine.ask("twin_b_volumen_bonos", comp_query, is_exploratory=is_exploratory)
-                st.write(res_b["response"])
-                with st.expander("🔎 Evidencia Twin B"):
-                    for ev in res_b.get("evidence_used", []):
-                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:120]}...\"*")
+        st.markdown("---")
+        st.markdown(f"### 💬 Transcripción del Debate en Vivo: *\"{topic_input}\"*")
 
-            with col_c:
-                st.markdown("<div class='twin-card-header'>🟡 Twin C: Carlos<br><small>Low-Pressure Flexibles</small></div>", unsafe_allow_html=True)
-                with st.spinner("Generando..."):
-                    res_c = engine.ask("twin_c_oportunista_relajado", comp_query, is_exploratory=is_exploratory)
-                st.write(res_c["response"])
-                with st.expander("🔎 Evidencia Twin C"):
-                    for ev in res_c.get("evidence_used", []):
-                        st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:120]}...\"*")
+        for turn in res_fg.get("transcript", []):
+            role = turn.get("role")
+            speaker = turn.get("speaker")
+            text = turn.get("text")
+            r_idx = turn.get("round", 0)
 
-# ---------------------------------------------------------
-# MODO CUADROS & MATRIZ COMPARATIVA (NUEVO)
-# ---------------------------------------------------------
-elif selected_mode == "📊 Cuadros & Matriz Comparativa":
-    st.subheader("📊 Cuadros Sintéticos & Matriz Comparativa Ejecutiva")
-    st.caption("Visualización estructurada en tablas y cuadros comparativos derivados del informe completo (58 páginas PDF) y las 25 entrevistas en profundidad.")
+            if role == "moderator":
+                st.info(f"🎙️ **{speaker}**: {text}")
+            else:
+                color_border = "#3B82F6" if "Marcos" in speaker else ("#10B981" if "Julio" in speaker else "#F59E0B")
+                st.markdown(
+                    f"""
+                    <div style='background-color:#FFFFFF; border-left:4px solid {color_border}; padding:0.8rem 1rem; border-radius:6px; margin-bottom:0.8rem; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
+                        <div style='font-size:0.85rem; color:#64748B; font-weight:600;'>Ronda {r_idx} | {speaker}</div>
+                        <div style='font-size:0.98rem; color:#1E293B; margin-top:0.3rem;'>{text}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+                if turn.get("evidence"):
+                    with st.expander(f"🔎 Ver Evidencia Cualitativa detras de la intervención de {speaker}"):
+                        for ev in turn["evidence"]:
+                            st.markdown(f"**Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
+                            st.markdown(f"> *\"{ev['text_snippet']}\"*")
+                            st.caption(f"Interpretación: {ev['interpretacion']}")
 
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.metric("Entrevistas Cualitativas", "25 IDIs", "Lima Norte & Sur")
-    with m2:
-        st.metric("Informe General PDF", "58 Páginas", "Agosto 2026")
-    with m3:
-        st.metric("Economía de Ticket", "S/ 3.50 - 8.00", "Micro-ticket L5")
-    with m4:
-        st.metric("Marcas Evaluadas", "3 Apps", "inDrive, Yango, Uber")
-
-    st.markdown("---")
-
-    tab_cuadro1, tab_cuadro2, tab_cuadro3 = st.tabs([
-        "📋 Cuadro Comparativo por Segmentos",
-        "⚔️ Matriz Competitiva de Apps",
-        "💡 Resumen Ejecutivo & Oportunidades"
-    ])
-
-    import pandas as pd
-
-    with tab_cuadro1:
-        st.markdown("### 📋 Cuadro Comparativo Integrado por Segmentos de Conductor")
-        st.caption("Matriz sintética que contrasta las 7 dimensiones estratégicas clave entre los perfiles de conductores Tuk Tuk / Mototaxi.")
-
-        segment_data = {
-            "Dimensión Estratégica": [
-                "1. Modelo Tarifario Preferido",
-                "2. Principal Motivador / Driver",
-                "3. Mayor Fricción Operativa",
-                "4. Actitud ante Tarifa Fija",
-                "5. Sensibilidad a Bonos y Cuotas",
-                "6. Comportamiento en Zonas Riesgosas",
-                "7. Relación y Lealtad con inDrive"
-            ],
-            "Marcos (Autónomo y Precavido)": [
-                "Negociación manual abierta ('Fair Fare')",
-                "Control total del destino, precio y autonomía",
-                "Temor a carreras a cerros peligrosos (Collique/Añashuayco)",
-                "Rechazo rotundo; exige ver destino antes de ofertar",
-                "Baja; prefiere asegurar margen por viaje sin presiones",
-                "Filtra severamente destinos; eleva tarifa si hay trocha",
-                "Alta preferencia por el modelo de contraoferta de inDrive"
-            ],
-            "Julio (Volumen y Bonos)": [
-                "Asignación automática directa (Modelo Yango)",
-                "Maximización del ingreso diario por volumen de viajes",
-                "Pérdida de tiempo ofertando y esperando confirmación",
-                "Aceptación alta si viene respaldada por bonos",
-                "Alta; se mueve 100% por metas y garantizados en soles",
-                "Acepta riesgos si la cuota del día lo exige",
-                "Usa inDrive como respaldo; migra a Yango por incentivos"
-            ],
-            "Carlos (Oportunista Relajado)": [
-                "Híbrido (App + Paradero tradicional)",
-                "Ingreso complementario sin horario fijo ni estrés",
-                "Comisiones altas o sistemas complejos de scoring",
-                "Indiferente; acepta si la tarifa cubre la distancia",
-                "Media-Baja; no trabaja suficientes horas para metas",
-                "Evita zonas de alto riesgo; prefiere rutas tranquilas",
-                "Usa inDrive de forma esporádica cuando le conviene"
-            ]
-        }
-        df_segmentos = pd.DataFrame(segment_data)
-
-        st.dataframe(
-            df_segmentos,
-            use_container_width=True,
-            hide_index=True
-        )
-
-        csv_data = df_segmentos.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="📥 Descargar Cuadro Comparativo en CSV (Excel)",
-            data=csv_data,
-            file_name="cuadro_comparativo_segmentos_indrive.csv",
-            mime="text/csv"
-        )
-
-    with tab_cuadro2:
-        st.markdown("### ⚔️ Matriz Competitiva de Plataformas (inDrive vs Yango vs Uber)")
-        st.caption("Comparativo de posicionamiento de marca extraído del capítulo 05 del informe de investigación (Páginas 26-53 del PDF).")
-
-        brand_data = {
-            "Atributo / Dimensión": [
-                "Posicionamiento percibido",
-                "Mecanismo de captura",
-                "Estructura de ganancias",
-                "Fortaleza principal",
-                "Barrera / Fricción mayor",
-                "Nivel de adopción en mototaxis"
-            ],
-            "inDrive (Fair Fare)": [
-                "Autonomía y precio justo",
-                "Negociación bidireccional de tarifa",
-                "Comisión porcentual por viaje",
-                "Conductor elige ruta, precio y pasajero",
-                "Poca densidad en zonas periféricas lejanas",
-                "Líder en reputación y equidad de marca"
-            ],
-            "Yango (Volume Leader)": [
-                "Rapidez y bonos de volumen",
-                "Asignación automática directa",
-                "Bonos por cumplimiento de cuotas diarias",
-                "Alta liquidez y flujo continuo de pedidos",
-                "Sensación de pérdida de control en tarifa",
-                "Crecimiento agresivo impulsado por incentivos"
-            ],
-            "Uber (Auto-Centric)": [
-                "Seguridad y marca corporativa",
-                "Algoritmo de asignación dinámica",
-                "Tarifa calculada por tiempo y distancia",
-                "Reconocimiento de marca masivo en autos",
-                "Interfaz no optimizada para mototaxis (L5)",
-                "Uso secundario y limitado en el segmento Tuk Tuk"
-            ]
-        }
-        df_brands = pd.DataFrame(brand_data)
-        st.dataframe(df_brands, use_container_width=True, hide_index=True)
-
-    with tab_cuadro3:
-        st.markdown("### 💡 Hallazgos Clave & Oportunidades del Informe PDF (Agosto 2026)")
-        
-        col_h1, col_h2 = st.columns(2)
-        with col_h1:
-            st.info("""
-            **📌 Realidad del Mercado L5 (Pág. 3-4 del PDF):**
-            - **Economía de Micro-ticket**: Las carreras oscilan entre **S/ 3.50 y S/ 8.00**.
-            - **Rutina Híbrida**: El conductor alterna el recojo en calle (*Street pick-up*) con el encendido de la app.
-            - **Boca a Boca & WhatsApp**: La adopción se propaga mostrando capturas de pantalla de ganancias diarias en grupos de mecánica.
-            """)
-        with col_h2:
-            st.success("""
-            **🎯 Oportunidad de Crecimiento inDrive:**
-            - **Desbloquear la UX**: Adaptar la interfaz para operaciones rápidas en mototaxis (L5) sin requerir clicks complejos.
-            - **Push de Pasajeros**: Aumentar la densidad de pedidos en distritos periféricos (Comas, Carabayllo, S.J.L.).
-            - **Incentivos Transparentes**: Crear esquemas de fidelización que mantengan el modelo "Fair Fare" sin forzar la asignación a ciegas.
-            """)
+        st.markdown("---")
+        st.markdown("### 📝 Síntesis Cualitativa del Moderador (Conclusiones de Producto)")
+        st.markdown(res_fg.get("synthesis", ""))
 
 # ---------------------------------------------------------
-# MODO 3: CHAT INDIVIDUAL
-# ---------------------------------------------------------
-elif selected_mode == "💬 Modo Chat Individual":
-    st.subheader("💬 Interacción Individual con un Digital Customer Twin")
-
-    twin_choice = st.selectbox(
-        "Selecciona el Digital Customer Twin:",
-        [
-            ("twin_a_autonomo_precavido", "Marcos - Disciplined Hard Work (Autónomo y Precavido)"),
-            ("twin_b_volumen_bonos", "Julio - Tactical Cash Optimizer (Volumen y Bonos)"),
-            ("twin_c_oportunista_relajado", "Carlos - Low-Pressure Flexibles (Oportunista y Relajado)")
-        ],
-        format_func=lambda x: x[1]
-    )
-    twin_id = twin_choice[0]
-    profile_info = engine.get_profile(twin_id)
-
-    with st.expander(f"ℹ️ Ver Resumen de Perfil: {profile_info.get('nombre_interno')}"):
-        col_p1, col_p2 = st.columns(2)
-        with col_p1:
-            st.markdown(f"**Segmento inDrive**: `{profile_info.get('bht_segment', 'N/A')}`")
-            st.markdown(f"**Descripción**: {profile_info.get('descripcion_corta', '')}")
-        with col_p2:
-            st.markdown("**Drivers Principales**:")
-            for d in profile_info.get('EVIDENCE', {}).get('drivers', []):
-                st.markdown(f"- {d}")
-
-    history_key = f"chat_history_{twin_id}"
-    if history_key not in st.session_state:
-        st.session_state[history_key] = []
-
-    user_query = st.chat_input("Escribe tu pregunta para este perfil...")
-
-    for msg in st.session_state[history_key]:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-            if msg.get("evidence"):
-                with st.expander("🔎 Evidencia Cualitativa"):
-                    for ev in msg["evidence"]:
-                        st.markdown(f"**Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
-                        st.markdown(f"> *\"{ev['text_snippet']}\"*")
-
-    if user_query:
-        with st.chat_message("user"):
-            st.markdown(user_query)
-
-        is_exploratory = "[EXPLORATORY SCENARIO]" in user_query.upper()
-        with st.spinner("Consultando corpus..."):
-            result = engine.ask(twin_id, user_query, is_exploratory=is_exploratory)
-
-        with st.chat_message("assistant"):
-            if result.get("is_unsupported"):
-                st.markdown("<span class='unsupported-badge'>⚠️ SIN EVIDENCIA SUFICIENTE EN CORPUS</span>", unsafe_allow_html=True)
-            elif result.get("is_exploratory"):
-                st.markdown("<span class='exploratory-badge'>🧪 ESCENARIO EXPLORATORIO HIPOTÉTICO</span>", unsafe_allow_html=True)
-
-            st.markdown(result["response"])
-
-            if result.get("evidence_used"):
-                with st.expander("🔎 Ver Evidencia Cualitativa Detrás de esta Respuesta"):
-                    for ev in result["evidence_used"]:
-                        st.markdown(f"**Transcripción Source**: `{ev['transcript_id']}` ({ev['interviewee_label']})")
-                        st.markdown(f"> *\"{ev['text_snippet']}\"*")
-                        st.caption(f"Interpretación: {ev['interpretacion']}")
-
-        st.session_state[history_key].append({"role": "user", "content": user_query})
-        st.session_state[history_key].append({"role": "assistant", "content": result["response"], "evidence": result.get("evidence_used", [])})
-
-# ---------------------------------------------------------
-# MODO 4: FICHAS DE PERFIL (3 TWINS)
-# ---------------------------------------------------------
-elif selected_mode == "📑 Fichas de perfil":
-    st.subheader("📑 Fichas de Perfil - Segmentos inDrive")
-
-    p_tabs = st.tabs([
-        "🔵 Twin A: Marcos (Disciplined Hard Work)",
-        "🟢 Twin B: Julio (Tactical Cash Optimizer)",
-        "🟡 Twin C: Carlos (Low-Pressure Flexibles)"
-    ])
-
-    for tab, pid in zip(p_tabs, ["twin_a_autonomo_precavido", "twin_b_volumen_bonos", "twin_c_oportunista_relajado"]):
-        with tab:
-            pdata = engine.get_profile(pid)
-            st.markdown(f"### {pdata.get('nombre_interno')}")
-            st.markdown(f"**Segmento inDrive**: `{pdata.get('bht_segment')}`")
-            st.markdown(f"*{pdata.get('descripcion_corta')}*")
-
-            st.markdown("---")
-            c1, c2, c3 = st.columns(3)
-
-            with c1:
-                st.markdown("#### 🟢 EVIDENCE (Del Corpus)")
-                st.markdown("**Necesidades Centrales**:")
-                for item in pdata.get("EVIDENCE", {}).get("necesidades", []):
-                    st.markdown(f"- {item}")
-                st.markdown("**Drivers Principales**:")
-                for item in pdata.get("EVIDENCE", {}).get("drivers", []):
-                    st.markdown(f"- {item}")
-                st.markdown("**Fricciones Críticas**:")
-                for item in pdata.get("EVIDENCE", {}).get("fricciones", []):
-                    st.markdown(f"- {item}")
-
-            with c2:
-                st.markdown("#### 🔵 INTERPRETATION (Síntesis Analítica)")
-                st.info(pdata.get("INTERPRETATION", {}).get("perfil_analitico", ""))
-                st.markdown("**Tensiones Internas**:")
-                st.write(pdata.get("INTERPRETATION", {}).get("tensiones_internas", ""))
-                st.markdown("**Lenguaje Característico**:")
-                for lang in pdata.get("lenguaje_caracteristico", []):
-                    st.markdown(f"- *\"{lang}\"*")
-
-            with c3:
-                st.markdown("#### 🔴 UNKNOWN (Sin Evidencia Suficiente)")
-                st.warning("Temas sin evidencia suficiente en el estudio:")
-                for unk in pdata.get("UNKNOWN", {}).get("temas_sin_evidencia", []):
-                    st.markdown(f"- ❌ {unk}")
-
-            st.markdown("---")
-            st.markdown(f"**Fuentes / Transcripts Sustentantes**: `{', '.join(pdata.get('fuentes_evidencia', {}).get('transcripts', []))}`")
-
-# ---------------------------------------------------------
-# MODO 5: PANEL DE EVIDENCIA
+# MODO 5: PANEL DE EVIDENCIA CUALITATIVA
 # ---------------------------------------------------------
 elif selected_mode == "🔍 Panel de Evidencia Cualitativa":
     st.subheader("🔍 Explorador de Matriz de Evidencia Cualitativa")
@@ -781,5 +710,3 @@ elif selected_mode == "🔍 Panel de Evidencia Cualitativa":
                 st.markdown(f"**Interpretación**: {item['interpretacion']}")
                 for ev in item["evidencia"]:
                     st.markdown(f"- **[{ev['transcript_id']}] {ev['interviewee_label']}**: *\"{ev['evidencia_textual']}\"*")
-
-
