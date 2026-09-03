@@ -65,6 +65,25 @@ def ingest_all(transcripts_dir: str = "data/raw/transcripts", guides_dir: str = 
                 "text": chunk_text
             })
 
+    # Process PDF Report chunks
+    pdf_report_path = os.path.join(os.path.dirname(transcripts_dir), "reports", "peru_tuk_tuk_indrive_2026.json")
+    if os.path.exists(pdf_report_path):
+        with open(pdf_report_path, "r", encoding="utf-8") as f:
+            pdf_data = json.load(f)
+            for item in pdf_data:
+                page_num = item.get("page", 0)
+                text = item.get("text", "")
+                if text:
+                    corpus.append({
+                        "id": f"REPORT_PDF_page_{page_num:02d}",
+                        "transcript_id": f"REPORT_P{page_num:02d}",
+                        "interviewee_label": f"Informe General Tuk Tuk (Página {page_num})",
+                        "app_affiliation": "Informe General",
+                        "source_file": "PERU TUK TUK INDRIVE.pdf",
+                        "chunk_index": page_num,
+                        "text": text
+                    })
+
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(corpus, f, ensure_ascii=False, indent=2)
@@ -72,8 +91,8 @@ def ingest_all(transcripts_dir: str = "data/raw/transcripts", guides_dir: str = 
     print(f"Successfully processed {len(corpus)} text chunks into {output_path}")
 
     # Process Brief files
+    brief_doc_path = os.path.join("data/raw/brief", "Brief de Mototaxis Lima.docx")
     brief_data = {}
-    brief_doc_path = os.path.join(brief_dir if 'brief_dir' in locals() else "data/raw/brief", "Brief de Mototaxis Lima.docx")
     if os.path.exists(brief_doc_path):
         doc = docx.Document(brief_doc_path)
         brief_data["brief_text"] = "\n".join([p.text.strip() for p in doc.paragraphs if p.text.strip()])

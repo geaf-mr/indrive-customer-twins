@@ -201,6 +201,7 @@ selected_mode = st.sidebar.radio(
     [
         "🎙️ Modo Focus Group Interactivo",
         "⚔️ Modo Comparación Side-by-Side",
+        "📊 Cuadros & Matriz Comparativa",
         "💬 Modo Chat Individual",
         "📑 Fichas de perfil",
         "🔍 Panel de Evidencia Cualitativa"
@@ -361,6 +362,151 @@ elif selected_mode == "⚔️ Modo Comparación Side-by-Side":
                 with st.expander("🔎 Evidencia Twin C"):
                     for ev in res_c.get("evidence_used", []):
                         st.markdown(f"**[{ev['transcript_id']}]** *\"{ev['text_snippet'][:120]}...\"*")
+
+# ---------------------------------------------------------
+# MODO CUADROS & MATRIZ COMPARATIVA (NUEVO)
+# ---------------------------------------------------------
+elif selected_mode == "📊 Cuadros & Matriz Comparativa":
+    st.subheader("📊 Cuadros Sintéticos & Matriz Comparativa Ejecutiva")
+    st.caption("Visualización estructurada en tablas y cuadros comparativos derivados del informe completo (58 páginas PDF) y las 25 entrevistas en profundidad.")
+
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric("Entrevistas Cualitativas", "25 IDIs", "Lima Norte & Sur")
+    with m2:
+        st.metric("Informe General PDF", "58 Páginas", "Agosto 2026")
+    with m3:
+        st.metric("Economía de Ticket", "S/ 3.50 - 8.00", "Micro-ticket L5")
+    with m4:
+        st.metric("Marcas Evaluadas", "3 Apps", "inDrive, Yango, Uber")
+
+    st.markdown("---")
+
+    tab_cuadro1, tab_cuadro2, tab_cuadro3 = st.tabs([
+        "📋 Cuadro Comparativo por Segmentos",
+        "⚔️ Matriz Competitiva de Apps",
+        "💡 Resumen Ejecutivo & Oportunidades"
+    ])
+
+    import pandas as pd
+
+    with tab_cuadro1:
+        st.markdown("### 📋 Cuadro Comparativo Integrado por Segmentos de Conductor")
+        st.caption("Matriz sintética que contrasta las 7 dimensiones estratégicas clave entre los perfiles de conductores Tuk Tuk / Mototaxi.")
+
+        segment_data = {
+            "Dimensión Estratégica": [
+                "1. Modelo Tarifario Preferido",
+                "2. Principal Motivador / Driver",
+                "3. Mayor Fricción Operativa",
+                "4. Actitud ante Tarifa Fija",
+                "5. Sensibilidad a Bonos y Cuotas",
+                "6. Comportamiento en Zonas Riesgosas",
+                "7. Relación y Lealtad con inDrive"
+            ],
+            "Marcos (Autónomo y Precavido)": [
+                "Negociación manual abierta ('Fair Fare')",
+                "Control total del destino, precio y autonomía",
+                "Temor a carreras a cerros peligrosos (Collique/Añashuayco)",
+                "Rechazo rotundo; exige ver destino antes de ofertar",
+                "Baja; prefiere asegurar margen por viaje sin presiones",
+                "Filtra severamente destinos; eleva tarifa si hay trocha",
+                "Alta preferencia por el modelo de contraoferta de inDrive"
+            ],
+            "Julio (Volumen y Bonos)": [
+                "Asignación automática directa (Modelo Yango)",
+                "Maximización del ingreso diario por volumen de viajes",
+                "Pérdida de tiempo ofertando y esperando confirmación",
+                "Aceptación alta si viene respaldada por bonos",
+                "Alta; se mueve 100% por metas y garantizados en soles",
+                "Acepta riesgos si la cuota del día lo exige",
+                "Usa inDrive como respaldo; migra a Yango por incentivos"
+            ],
+            "Carlos (Oportunista Relajado)": [
+                "Híbrido (App + Paradero tradicional)",
+                "Ingreso complementario sin horario fijo ni estrés",
+                "Comisiones altas o sistemas complejos de scoring",
+                "Indiferente; acepta si la tarifa cubre la distancia",
+                "Media-Baja; no trabaja suficientes horas para metas",
+                "Evita zonas de alto riesgo; prefiere rutas tranquilas",
+                "Usa inDrive de forma esporádica cuando le conviene"
+            ]
+        }
+        df_segmentos = pd.DataFrame(segment_data)
+
+        st.dataframe(
+            df_segmentos,
+            use_container_width=True,
+            hide_index=True
+        )
+
+        csv_data = df_segmentos.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Descargar Cuadro Comparativo en CSV (Excel)",
+            data=csv_data,
+            file_name="cuadro_comparativo_segmentos_indrive.csv",
+            mime="text/csv"
+        )
+
+    with tab_cuadro2:
+        st.markdown("### ⚔️ Matriz Competitiva de Plataformas (inDrive vs Yango vs Uber)")
+        st.caption("Comparativo de posicionamiento de marca extraído del capítulo 05 del informe de investigación (Páginas 26-53 del PDF).")
+
+        brand_data = {
+            "Atributo / Dimensión": [
+                "Posicionamiento percibido",
+                "Mecanismo de captura",
+                "Estructura de ganancias",
+                "Fortaleza principal",
+                "Barrera / Fricción mayor",
+                "Nivel de adopción en mototaxis"
+            ],
+            "inDrive (Fair Fare)": [
+                "Autonomía y precio justo",
+                "Negociación bidireccional de tarifa",
+                "Comisión porcentual por viaje",
+                "Conductor elige ruta, precio y pasajero",
+                "Poca densidad en zonas periféricas lejanas",
+                "Líder en reputación y equidad de marca"
+            ],
+            "Yango (Volume Leader)": [
+                "Rapidez y bonos de volumen",
+                "Asignación automática directa",
+                "Bonos por cumplimiento de cuotas diarias",
+                "Alta liquidez y flujo continuo de pedidos",
+                "Sensación de pérdida de control en tarifa",
+                "Crecimiento agresivo impulsado por incentivos"
+            ],
+            "Uber (Auto-Centric)": [
+                "Seguridad y marca corporativa",
+                "Algoritmo de asignación dinámica",
+                "Tarifa calculada por tiempo y distancia",
+                "Reconocimiento de marca masivo en autos",
+                "Interfaz no optimizada para mototaxis (L5)",
+                "Uso secundario y limitado en el segmento Tuk Tuk"
+            ]
+        }
+        df_brands = pd.DataFrame(brand_data)
+        st.dataframe(df_brands, use_container_width=True, hide_index=True)
+
+    with tab_cuadro3:
+        st.markdown("### 💡 Hallazgos Clave & Oportunidades del Informe PDF (Agosto 2026)")
+        
+        col_h1, col_h2 = st.columns(2)
+        with col_h1:
+            st.info("""
+            **📌 Realidad del Mercado L5 (Pág. 3-4 del PDF):**
+            - **Economía de Micro-ticket**: Las carreras oscilan entre **S/ 3.50 y S/ 8.00**.
+            - **Rutina Híbrida**: El conductor alterna el recojo en calle (*Street pick-up*) con el encendido de la app.
+            - **Boca a Boca & WhatsApp**: La adopción se propaga mostrando capturas de pantalla de ganancias diarias en grupos de mecánica.
+            """)
+        with col_h2:
+            st.success("""
+            **🎯 Oportunidad de Crecimiento inDrive:**
+            - **Desbloquear la UX**: Adaptar la interfaz para operaciones rápidas en mototaxis (L5) sin requerir clicks complejos.
+            - **Push de Pasajeros**: Aumentar la densidad de pedidos en distritos periféricos (Comas, Carabayllo, S.J.L.).
+            - **Incentivos Transparentes**: Crear esquemas de fidelización que mantengan el modelo "Fair Fare" sin forzar la asignación a ciegas.
+            """)
 
 # ---------------------------------------------------------
 # MODO 3: CHAT INDIVIDUAL
